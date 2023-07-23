@@ -14,7 +14,7 @@ function Header(props) {
             </div>
             <ul className="header__account">
               <li>
-                <Link ti="#" className="header__signup-link">
+                <Link to="#" className="header__signup-link">
                   Регистрация
                 </Link>
               </li>
