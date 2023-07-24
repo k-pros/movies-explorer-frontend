@@ -9,7 +9,7 @@ function App() {
     <div className="page">
       <div className="page__container">
         <Header />
-          <main>
+          <main className="main">
             <Routes>
               <Route
                 path="/"
