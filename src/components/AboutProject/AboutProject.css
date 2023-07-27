@@ -40,7 +40,6 @@
 }
 
 .project-levels {
-  height: 100px;
   display: grid;
   grid-template-columns: minmax(100px, 20%) minmax(184px, 80%);
   grid-template-rows: 36px 17px;
