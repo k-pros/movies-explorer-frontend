@@ -1,6 +1,7 @@
 import "./AboutMe.css";
-import photo from "../../images/about-me_photo.jpg";
 import { Link } from "react-router-dom";
+import photo from "../../images/about-me_photo.jpg";
+// import arrow from "../../images/portfolio-arrow.png";
 
 function AboutMe() {
   return (
@@ -19,11 +20,54 @@ function AboutMe() {
               accusantium veniam quod ea ipsum voluptas. Obcaecati, animi autem!
             </p>
           </div>
-          <Link to="https://github.com/tager-pro" className="about-me__github" target="blank">
+          <Link
+            to="https://github.com/tager-pro"
+            className="about-me__github"
+            target="blank"
+            rel="noreferrer"
+          >
             Github
           </Link>
         </div>
         <img src={photo} alt="фото" className="about-me__photo" />
+      </div>
+      <div className="portfolio">
+        <h4 className="portfolio__subtitle">Портфолио</h4>
+        <ul className="portfolio__list">
+          <li className="portfolio__list-item">
+            <Link
+              to="#"
+              className="portfolio__link"
+              target="blank"
+              rel="noreferrer"
+            >
+              Статичный сайт
+              <div className="portfolio__ico"></div>
+            </Link>
+          </li>
+          <li className="portfolio__list-item">
+            <Link
+              to="#"
+              className="portfolio__link"
+              target="blank"
+              rel="noreferrer"
+            >
+              Адаптивный сайт
+              <div className="portfolio__ico"></div>
+            </Link>
+          </li>
+          <li className="portfolio__list-item">
+            <Link
+              to="#"
+              className="portfolio__link"
+              target="blank"
+              rel="noreferrer"
+            >
+              Одностраничное приложение
+              <div className="portfolio__ico"></div>
+            </Link>
+          </li>
+        </ul>
       </div>
     </section>
   );
