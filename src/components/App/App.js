@@ -3,6 +3,7 @@ import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import './App.css';
+import Movies from '../Movies/Movies';
 
 function App() {
   return (
@@ -14,6 +15,10 @@ function App() {
               <Route
                 path="/"
                 element={<Main />}
+              />
+              <Route
+                path="/movies"
+                element={<Movies />}
               />
             </Routes>
           </main>
