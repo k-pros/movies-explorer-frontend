@@ -8,7 +8,7 @@ function Movies() {
     <>
       <SearchForm />
       <MoviesCardList />
-      <button type="button" aria-label="Ещё" className="movies__button">Ещё</button>
+      <button type="button" aria-label="Ещё" className="movies__button btn">Ещё</button>
     </>
   );
 }

@@ -14,13 +14,13 @@ function Header(props) {
             </div>
             <ul className="header__account">
               <li>
-                <Link to="#" className="header__signup-link">
+                <Link to="#" className="header__signup-link link">
                   Регистрация
                 </Link>
               </li>
               <li>
                 <button
-                  className="header__signin-btn"
+                  className="header__signin-btn btn"
                   type="button"
                   aria-label="Войти"
                 >
@@ -41,13 +41,13 @@ function Header(props) {
                 <li>
                   <Link
                     to="#"
-                    className="header__nav-link header__nav-link_active"
+                    className="header__nav-link header__nav-link_active link"
                   >
                     Фильмы
                   </Link>
                 </li>
                 <li>
-                  <Link to="#" className="header__nav-link">
+                  <Link to="#" className="header__nav-link link">
                     Сохранённые фильмы
                   </Link>
                 </li>

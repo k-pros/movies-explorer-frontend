@@ -36,7 +36,7 @@ function AboutMe() {
           <li className="portfolio__list-item">
             <Link
               to="#"
-              className="portfolio__link"
+              className="portfolio__link link"
               target="blank"
               rel="noreferrer"
             >
@@ -44,7 +44,7 @@ function AboutMe() {
               <div className="portfolio__ico"></div>
             </Link>
           </li>
-          <li className="portfolio__list-item">
+          <li className="portfolio__list-item link">
             <Link
               to="#"
               className="portfolio__link"
@@ -58,7 +58,7 @@ function AboutMe() {
           <li className="portfolio__list-item">
             <Link
               to="#"
-              className="portfolio__link"
+              className="portfolio__link link"
               target="blank"
               rel="noreferrer"
             >

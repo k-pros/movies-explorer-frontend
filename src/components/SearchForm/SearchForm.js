@@ -6,7 +6,7 @@ function SearchForm() {
       <div className="search-form">
         <input type="text" className="search-form__input" />
         <button
-          className="search-form__btn"
+          className="search-form__btn btn"
           type="button"
           aria-label="Найти"
         ></button>
@@ -15,7 +15,7 @@ function SearchForm() {
         <button
           type="button"
           aria-label="Переключатель"
-          class="search__toggle search__toggle_inactive"
+          class="search__toggle btn search__toggle_inactive"
         ></button>
         <p className="search__toggle-name">Короткометражки</p>
       </div>

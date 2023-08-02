@@ -15,7 +15,7 @@ function Footer() {
             <li>
               <Link
                 to="https://practicum.yandex.ru"
-                className="footer__link"
+                className="footer__link link"
                 target="_blank"
               >
                 Яндекс.Практикум
@@ -24,7 +24,7 @@ function Footer() {
             <li>
               <Link
                 to="https://github.com/tager-pro"
-                className="footer__link"
+                className="footer__link link"
                 target="_blank"
               >
                 Github

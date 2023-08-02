@@ -22,9 +22,7 @@
   background-image: url("../../images/search-ico.svg");
   background-size: contain;
   background-repeat: no-repeat;
-  border: 0;
   background-color: #fafafa;
-  cursor: pointer;
   box-sizing: border-box;
   padding: 0;
 }
@@ -42,9 +40,7 @@
   background-image: url("../../images/search-toggle.svg");
   background-repeat: no-repeat;
   margin-right: 12px;
-  border: 0;
   background-color: #fafafa;
-  cursor: pointer;
   box-sizing: border-box;
 }
 
