@@ -1,7 +1,6 @@
 import "./AboutMe.css";
 import { Link } from "react-router-dom";
 import photo from "../../images/about-me_photo.jpg";
-// import arrow from "../../images/portfolio-arrow.png";
 
 function AboutMe() {
   return (
