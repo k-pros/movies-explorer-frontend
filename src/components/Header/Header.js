@@ -32,7 +32,7 @@ function Header(props) {
         }
       />
       <Route
-        path="/movies"
+        path="/*"
         element={
           <header className="header">
             <div className="header__container">
