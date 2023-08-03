@@ -15,7 +15,7 @@ function SearchForm() {
         <button
           type="button"
           aria-label="Переключатель"
-          class="search__toggle btn search__toggle_inactive"
+          class="search__toggle btn"
         ></button>
         <p className="search__toggle-name">Короткометражки</p>
       </div>

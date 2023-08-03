@@ -1,72 +1,16 @@
+import { Route, Routes } from "react-router-dom";
 import "./MoviesCard.css";
-
-const cardImage =
-  "https://avatars.mds.yandex.net/i?id=793583fe8aeffa99db89a11a272229168759f768-9085653-images-thumbs&n=13";
 
 function MoviesCard() {
   return (
-    <>
-      <li className="card">
-        <div className="card__container">
-          <div className="card__description">
-            <h2 className="card__title">33 слова о дизайне</h2>
-            <p className="card__time">1ч 47м</p>
-          </div>
-          <div className="card__save"></div>
-        </div>
-        <img src={cardImage} alt="Обложка фильма" className="card__image" />
-      </li>
-      <li className="card__item">
-        <div className="card__container">
-          <div className="card__description">
-            <h2 className="card__title">33 слова о дизайне</h2>
-            <p className="card__time">1ч 47м</p>
-          </div>
-          <div className="card__save"></div>
-        </div>
-        <img src={cardImage} alt="Обложка фильма" className="card__image" />
-      </li>
-      <li className="card__item">
-        <div className="card__container">
-          <div className="card__description">
-            <h2 className="card__title">33 слова о дизайне</h2>
-            <p className="card__time">1ч 47м</p>
-          </div>
-          <div className="card__save card__save_active"></div>
-        </div>
-        <img src={cardImage} alt="Обложка фильма" className="card__image" />
-      </li>
-      <li className="card__item">
-        <div className="card__container">
-          <div className="card__description">
-            <h2 className="card__title">33 слова о дизайне</h2>
-            <p className="card__time">1ч 47м</p>
-          </div>
-          <div className="card__save card__save_active"></div>
-        </div>
-        <img src={cardImage} alt="Обложка фильма" className="card__image" />
-      </li>
-      <li className="card__item">
-        <div className="card__container">
-          <div className="card__description">
-            <h2 className="card__title">33 слова о дизайне</h2>
-            <p className="card__time">1ч 47м</p>
-          </div>
-          <div className="card__save"></div>
-        </div>
-        <img src={cardImage} alt="Обложка фильма" className="card__image" />
-      </li>
-      <li className="card__item">
-        <div className="card__container">
-          <div className="card__description">
-            <h2 className="card__title">33 слова о дизайне</h2>
-            <p className="card__time">1ч 47м</p>
-          </div>
-          <div className="card__save card__save_active"></div>
-        </div>
-        <img src={cardImage} alt="Обложка фильма" className="card__image" />
-      </li>
-    </>
+    <Routes>
+      <Route path="/movies" element={
+        <p>AAAAAAAAAAA</p>
+      } />
+      <Route path="/saved-movies" element={
+        <p>BBBBBBBBBBB</p>
+      } />
+    </Routes>
   );
 }
 

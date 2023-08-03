@@ -1,6 +1,7 @@
 .card {
   display: flex;
   flex-direction: column;
+  background-color: #fff;
 }
 
 .card__container {
@@ -32,7 +33,10 @@
 
 .card__save_active {
   background-image: url("../../images/movies-save-ico_active.svg");
+}
 
+.card__delete {
+  background-image: url("../../images/movies-delete-ico.svg");
 }
 
 .card__image {
