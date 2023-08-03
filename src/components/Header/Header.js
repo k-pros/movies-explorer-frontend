@@ -1,16 +1,17 @@
 import React from "react";
 import "./Header.css";
 import { Link, Route, Routes } from "react-router-dom";
+import Logo from "../Logo/Logo";
 
 function Header(props) {
   return (
     <Routes>
       <Route
-        path="/"
+        // path="/"
         element={
           <header className="header header_main-page">
             <div className="header__container">
-              <div className="header__logo"></div>
+              <Logo />
             </div>
             <ul className="header__account">
               <li>
@@ -32,7 +33,7 @@ function Header(props) {
         }
       />
       <Route
-        path="/*"
+        path="/"
         element={
           <header className="header">
             <div className="header__container">
