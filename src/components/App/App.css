@@ -30,12 +30,25 @@
 
 .btn {
   border: none;
+  background-color: #3456f3;
+  color: #fff;
   transition: opacity ease-in-out .2s;
 }
 
 .btn:hover {
   cursor: pointer;
   opacity: 0.8;
+}
+
+.btn_disabled {
+  background-color: #f4f4f4;
+  color: #C2C2C2;
+  opacity: 1;
+}
+
+.btn_disabled:hover {
+  opacity: 1;
+  cursor: default;
 }
 
 .link {

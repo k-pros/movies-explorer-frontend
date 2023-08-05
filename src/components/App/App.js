@@ -6,6 +6,7 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import PageNotFound from '../PageNotFound/PageNotFound';
+import Profile from '../Profile/Profile';
 
 function App() {
   return (
@@ -31,6 +32,10 @@ function App() {
           <Route
             path="/signin"
             element={<Login />}
+          />
+          <Route
+            path="/profile"
+            element={<Profile />}
           />
           <Route
             path="/*"
