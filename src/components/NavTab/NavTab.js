@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import "./NavTab.css";
 
 function NavTab() {
@@ -7,13 +6,13 @@ function NavTab() {
     <nav className="nav-tab">
       <ul className="nav-links">
         <li>
-          <Link to="#" className="nav-link">О проекте</Link>
+          <a href="#about" className="nav-link">О проекте</a>
         </li>
         <li>
-          <Link to="#" className="nav-link">Технологии</Link>
+          <a href="#tech" className="nav-link">Технологии</a>
         </li>
         <li>
-          <Link to="#" className="nav-link">Студент</Link>
+          <a href="#student" className="nav-link">Студент</a>
         </li>
       </ul>
     </nav>

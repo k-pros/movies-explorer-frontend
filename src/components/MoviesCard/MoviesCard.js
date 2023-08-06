@@ -20,7 +20,7 @@ function MoviesCard() {
           </div>
           <img src={cardImage} alt="Обложка фильма" className="card__image" />
         </li>
-        <li className="card__item">
+        <li className="card">
           <div className="card__container">
             <div className="card__description">
               <h2 className="card__title">33 слова о дизайне</h2>
@@ -30,7 +30,7 @@ function MoviesCard() {
           </div>
           <img src={cardImage} alt="Обложка фильма" className="card__image" />
         </li>
-        <li className="card__item">
+        <li className="card">
           <div className="card__container">
             <div className="card__description">
               <h2 className="card__title">33 слова о дизайне</h2>
@@ -40,7 +40,7 @@ function MoviesCard() {
           </div>
           <img src={cardImage} alt="Обложка фильма" className="card__image" />
         </li>
-        <li className="card__item">
+        <li className="card">
           <div className="card__container">
             <div className="card__description">
               <h2 className="card__title">33 слова о дизайне</h2>
@@ -50,7 +50,7 @@ function MoviesCard() {
           </div>
           <img src={cardImage} alt="Обложка фильма" className="card__image" />
         </li>
-        <li className="card__item">
+        <li className="card">
           <div className="card__container">
             <div className="card__description">
               <h2 className="card__title">33 слова о дизайне</h2>
@@ -60,7 +60,7 @@ function MoviesCard() {
           </div>
           <img src={cardImage} alt="Обложка фильма" className="card__image" />
         </li>
-        <li className="card__item">
+        <li className="card">
           <div className="card__container">
             <div className="card__description">
               <h2 className="card__title">33 слова о дизайне</h2>

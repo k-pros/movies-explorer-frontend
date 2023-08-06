@@ -8,7 +8,7 @@ function Portfolio() {
       <ul className="portfolio__list">
         <li className="portfolio__list-item">
           <Link
-            to="#"
+            to="https://tager-pro.github.io/how-to-learn"
             className="portfolio__link link"
             target="blank"
             rel="noreferrer"
@@ -19,7 +19,7 @@ function Portfolio() {
         </li>
         <li className="portfolio__list-item link">
           <Link
-            to="#"
+            to="https://tager-pro.github.io/russian-travel"
             className="portfolio__link"
             target="blank"
             rel="noreferrer"
@@ -30,7 +30,7 @@ function Portfolio() {
         </li>
         <li className="portfolio__list-item">
           <Link
-            to="#"
+            to="https://tager-pro.github.io/mesto"
             className="portfolio__link link"
             target="blank"
             rel="noreferrer"

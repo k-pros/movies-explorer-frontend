@@ -5,11 +5,11 @@ import photo from "../../images/about-me_photo.jpg";
 
 function AboutMe() {
   return (
-    <section className="about-me">
+    <section className="about-me" id="student">
       <h2 className="about-me__title subtitle">Студент</h2>
       <div className="about-me__container">
         <div className="about-me__container-info">
-          <div className="about-me_info">
+          <div className="about-me__info">
             <h3 className="about-me__name">Кирилл</h3>
             <p className="about-me__about">Фронтенд-разработчик, 35 лет</p>
             <p className="about-me__text text">
