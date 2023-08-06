@@ -11,23 +11,28 @@ function Register() {
           <h2 className="form__title">Добро пожаловать!</h2>
           <label className="form__label">
             Имя
-            <input type="text" className="form__input" />
+            <input type="text" className="form__input" minLength={2} maxLength={30} required />
           </label>
 
           <label className="form__label">
             E-mail
-            <input type="text" className="form__input" />
+            <input type="email" className="form__input" minLength={2} maxLength={30} required />
           </label>
 
           <label className="form__label">
             Пароль
-            <input type="password" className="form__input form__input_error" />
+            <input
+              type="password"
+              className="form__input form__input_error"
+              minLength={2} maxLength={30}
+              required
+            />
           </label>
           <span className="form__error">Что-то пошло не так...</span>
         </div>
 
         <button
-          type="button"
+          type="submit"
           className="form__btn btn"
           aria-label="Зарегистрироваться"
         >
