@@ -12,6 +12,12 @@
   color: #000;
 }
 
+@media screen and (max-width: 800px) {
+  .movies {
+    padding: 70px 30px 30px;
+  }
+}
+
 @media screen and (max-width: 550px) {
   .movies {
     padding: 40px 16px 30px;
