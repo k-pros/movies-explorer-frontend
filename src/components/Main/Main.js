@@ -7,10 +7,10 @@ import NavTab from "../NavTab/NavTab";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 
-function Main() {
+function Main({ isLoggedIn }) {
   return (
     <>
-      <Header />
+      <Header isLoggedIn={isLoggedIn} />
       <main className="content">
         <Promo />
         <NavTab />

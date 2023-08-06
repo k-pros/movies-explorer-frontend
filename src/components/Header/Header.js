@@ -1,56 +1,48 @@
-import React from "react";
+import { useState } from "react";
 import "./Header.css";
-import { Link, Route, Routes } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Logo from "../Logo/Logo";
 import ProfileLink from "../ProfileLink/ProfileLink";
 import Navbar from "../Navbar/Navbar";
 
-function Header(props) {
-  const [isNavbarOpen, setIsNavbarOpen] = React.useState(false);
+function Header({ isLoggedIn }) {
+  const [isNavbarOpen, setIsNavbarOpen] = useState(false);
 
   function handleBurgerClick() {
-    setIsNavbarOpen(true)
+    setIsNavbarOpen(true);
   }
 
-  function closeNaveBar() {
-    setIsNavbarOpen(false)
+  function closeNavbar() {
+    setIsNavbarOpen(false);
   }
 
   return (
-    <Routes>
-      <Route
-        // path="/"
-        element={
+    <>
+      {!isLoggedIn ? (
+        <>
           <header className="header header_main-page">
             <Logo />
             <div className="header__container">
-              <ul className="header__account">
+              <ul className="header__auth">
                 <li>
-                  <Link to="#" className="header__signup-link link">
+                  <Link to="/signup" className="header__signup-link link">
                     Регистрация
                   </Link>
                 </li>
                 <li>
-                  <button
-                    className="header__signin-btn btn"
-                    type="button"
-                    aria-label="Войти"
-                  >
+                  <Link to="/signin" className="header__signin-link btn">
                     Войти
-                  </button>
+                  </Link>
                 </li>
               </ul>
             </div>
           </header>
-        }
-      />
-
-      <Route
-        path="/"
-        element={
+        </>
+      ) : (
+        <>
           <header className="header">
             <Logo />
-            <div className="header__container">
+            <div className="header__container header__container_authorized">
               <ul className="header__links">
                 <li>
                   <Link
@@ -68,17 +60,16 @@ function Header(props) {
               </ul>
               <ProfileLink />
             </div>
-            <button onClick={handleBurgerClick} type="button" className="burger-btn btn"></button>
-
-            <Navbar
-              isOpen={isNavbarOpen}
-              onClose={closeNaveBar}
-            />
-
+            <button
+              onClick={handleBurgerClick}
+              type="button"
+              className="burger-btn btn"
+            ></button>
+            <Navbar isOpen={isNavbarOpen} onClose={closeNavbar} />
           </header>
-        }
-      />
-    </Routes>
+        </>
+      )}
+    </>
   );
 }
 

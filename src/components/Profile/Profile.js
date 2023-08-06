@@ -1,10 +1,10 @@
 import Header from "../Header/Header";
 import "./Profile.css";
 
-function Profile() {
+function Profile({ isLoggedIn, onSignOut }) {
   return (
     <>
-      <Header />
+      <Header isLoggedIn={isLoggedIn} />
       <section className="profile">
         <div className="profile__container">
           <h2 className="profile__title">Привет, Виталий!</h2>
@@ -29,6 +29,7 @@ function Profile() {
             Редактировать
           </button>
           <button
+            onClick={onSignOut}
             type="button"
             aria-label="Выйти из аккаунта"
             className="profile__btn profile__btn_signout link"

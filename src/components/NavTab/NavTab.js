@@ -7,13 +7,13 @@ function NavTab() {
     <nav className="nav-tab">
       <ul className="nav-links">
         <li>
-          <Link Link to="#" className="nav-link">О проекте</Link>
+          <Link to="#" className="nav-link">О проекте</Link>
         </li>
         <li>
-          <Link Link to="#" className="nav-link">Технологии</Link>
+          <Link to="#" className="nav-link">Технологии</Link>
         </li>
         <li>
-          <Link Link to="#" className="nav-link">Студент</Link>
+          <Link to="#" className="nav-link">Студент</Link>
         </li>
       </ul>
     </nav>

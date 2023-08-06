@@ -8,7 +8,6 @@ function MoviesCard() {
   const location = useLocation();
 
   if (location.pathname === "/movies" || location.pathname === "/movies/") {
-    console.log(location.pathname);
     return (
       <>
         <li className="card">
