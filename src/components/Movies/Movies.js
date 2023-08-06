@@ -12,7 +12,7 @@ function Movies({ isLoggedIn }) {
       <main className="content">
         <SearchForm />
         <MoviesCardList />
-        <button type="button" aria-label="Ещё" className="movies__button btn">
+        <button type="button" aria-label="Ещё" className="movies-button btn">
           Ещё
         </button>
       </main>
