@@ -82,4 +82,9 @@
     line-height: 28px;
     letter-spacing: -0.72px;
   }
+
+  .portfolio__ico {
+    width: 10px;
+    height: 10px;
+  }
 }
