@@ -1,12 +1,13 @@
 import { useState } from "react";
 import "./Header.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Logo from "../Logo/Logo";
 import ProfileLink from "../ProfileLink/ProfileLink";
 import Navbar from "../Navbar/Navbar";
 
 function Header({ isLoggedIn }) {
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
+  const location = useLocation();
 
   function handleBurgerClick() {
     setIsNavbarOpen(true);
@@ -18,10 +19,14 @@ function Header({ isLoggedIn }) {
 
   return (
     <>
-      {!isLoggedIn ? (
-        <>
-          <header className="header header_main-page">
-            <Logo />
+      <header
+        className={`header ${
+          location.pathname === "/" ? "header_main-page" : ""
+        }`}
+      >
+        <Logo />
+        {!isLoggedIn ? (
+          <>
             <div className="header__container">
               <ul className="header__auth">
                 <li>
@@ -36,12 +41,9 @@ function Header({ isLoggedIn }) {
                 </li>
               </ul>
             </div>
-          </header>
-        </>
-      ) : (
-        <>
-          <header className="header">
-            <Logo />
+          </>
+        ) : (
+          <>
             <div className="header__container header__container_authorized">
               <ul className="header__links">
                 <li>
@@ -66,9 +68,9 @@ function Header({ isLoggedIn }) {
               className="burger-btn btn"
             ></button>
             <Navbar isOpen={isNavbarOpen} onClose={closeNavbar} />
-          </header>
-        </>
-      )}
+          </>
+        )}
+      </header>
     </>
   );
 }
