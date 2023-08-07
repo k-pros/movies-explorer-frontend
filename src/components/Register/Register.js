@@ -11,19 +11,20 @@ function Register() {
           <h2 className="form__title">Добро пожаловать!</h2>
           <label className="form__label">
             Имя
-            <input type="text" className="form__input" minLength={2} maxLength={30} required />
+            <input type="text" className="form__input" placeholder="Имя" minLength={2} maxLength={30} required />
           </label>
 
           <label className="form__label">
             E-mail
-            <input type="email" className="form__input" minLength={2} maxLength={30} required />
+            <input type="email" className="form__input" placeholder="E-mail" minLength={2} maxLength={30} required />
           </label>
 
           <label className="form__label">
             Пароль
             <input
               type="password"
-              className="form__input form__input_error"
+              className="form__input"
+              placeholder="Пароль"
               minLength={2} maxLength={30}
               required
             />
