@@ -1,0 +1,65 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+}
+
+.card__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px;
+  box-sizing: border-box;
+}
+
+.card__title {
+  max-width: 280px;
+  margin: 0 0 9px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.card__time {
+  margin: 0;
+  color: #a0a0a0;
+  font-size: 11px;
+}
+
+.card__save-btn {
+  width: 30px;
+  height: 30px;
+  background-image: url("../../images/movies-save-ico.svg");
+  background-color: inherit;
+}
+
+.card__save-btn_active {
+  background-image: url("../../images/movies-save-ico_active.svg");
+}
+
+.card__save-btn_delete {
+  background-image: url("../../images/movies-delete-ico.svg");
+}
+
+.card__image {
+  width: 100%;
+  height: 203px;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 550px) {
+  .card__image {
+    height: 190px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .card__image {
+    height: 203px;
+  }
+}
+
+@media screen and (max-width: 340px) {
+  .card__image {
+    height: 168px;
+  }
+}

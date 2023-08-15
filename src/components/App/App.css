@@ -1,0 +1,58 @@
+.page {
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: 'Inter', Arial, sans-serif;
+  font-style: normal;
+  background-color: #fafafa;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+.page__container {
+  max-width: 1280px;
+  min-height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex-grow: 1;
+}
+
+.btn {
+  border: none;
+  background-color: #3456f3;
+  color: #fff;
+  transition: opacity ease-in-out .2s;
+}
+
+.btn:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.btn_disabled {
+  background-color: #f4f4f4;
+  color: #C2C2C2;
+  opacity: 1;
+}
+
+.btn_disabled:hover {
+  opacity: 1;
+  cursor: default;
+}
+
+.link {
+  transition: opacity ease-in-out .2s;
+  text-decoration: none;
+}
+
+.link:hover {
+  cursor: pointer;
+  opacity: 0.7;
+}
