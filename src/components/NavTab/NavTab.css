@@ -29,4 +29,8 @@
   .nav-link {
     font-size: 11px;
   }
+  
+  .nav-links {
+    gap: 24px;
+  }
 }

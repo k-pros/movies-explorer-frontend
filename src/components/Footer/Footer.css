@@ -58,6 +58,7 @@
   .footer__container {
     flex-direction: column-reverse;
     gap: 30px;
+    padding-top: 30px;
   }
 
   .footer__date {
@@ -70,6 +71,9 @@
     flex-direction: column;
     padding: 0;
     gap: 12px;
-    font-size: 12px;
+  }
+
+  .footer__link {
+  font-size: 12px;
   }
 }

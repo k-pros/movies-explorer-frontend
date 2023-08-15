@@ -57,7 +57,6 @@
 @media screen and (max-width: 800px) {
   .about-me {
     padding: 90px 50px;
-
   }
 
   .about-me__name {
@@ -92,5 +91,25 @@
 @media screen and (max-width: 480px) {
   .about-me {
     padding: 70px 14px;
+  }
+
+  .about-me__container {
+    gap: 40px;
+  }
+
+  .about-me__name {
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -1.2px;
+  }
+
+  .about-me__about {
+    margin: 0 0 20px;
+  }
+
+  .about-me__text {
+    margin: 0 0 40px;
   }
 }
