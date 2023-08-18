@@ -4,12 +4,16 @@
 
 .movies-button {
   margin: 50px auto 80px;
-  display: block;
+  display: none;
   width: 320px;
   height: 36px;
   border-radius: 6px;
   background-color: #f4f4f4;
   color: #000;
+}
+
+.movies-button_visible {
+  display: block;
 }
 
 @media screen and (max-width: 800px) {
