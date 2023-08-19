@@ -15,6 +15,7 @@
 .card__description {
   max-width: 100%;
   flex-grow: 1;
+  overflow: hidden;
 }
 
 .card__title {
@@ -40,6 +41,7 @@
   background-color: inherit;
   background-repeat: no-repeat;
   background-size: cover;
+  flex-shrink: 0;
 }
 
 .card__save-btn_active {
