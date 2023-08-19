@@ -1,6 +1,6 @@
 import "./SearchForm.css";
 
-function SearchForm() {
+function SearchForm( { onSearchMovies }) {
   return (
     <section className="search">
       <div className="search-form">
@@ -9,6 +9,7 @@ function SearchForm() {
           className="search-form__btn btn"
           type="button"
           aria-label="Найти"
+          onClick={onSearchMovies}
         ></button>
       </div>
       <div className="search__container-toggle">

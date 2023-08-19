@@ -16,6 +16,10 @@
   display: block;
 }
 
+.movies__search-result {
+  text-align: center;
+}
+
 @media screen and (max-width: 800px) {
   .movies {
     padding: 70px 30px 30px;

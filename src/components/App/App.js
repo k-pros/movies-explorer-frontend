@@ -14,26 +14,18 @@ function App() {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(true); // стейт авторизации пользователя
   const [cards, setCards] = useState([]); // стейт карточек
+  const [isLoading, setIsLoading] = useState(false); // стейт процесса загрузки данных
 
-  
-  // загрузка информации о фильмах с сервера Beatfilm
-  useEffect(() => {
+   function handleGetMovies() {
+    setIsLoading(true);
+
     moviesApi.getMovies()
-      .then((data) => {
-        setCards(data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
-  useEffect(() => {
-  //   mainApi.register('11test@test.ru', 'name11', '123')
-  //     .then((data) => {
-  //       // console.log(data);
-  //     })
-  //     .catch((err) => console.log(err));
-
-    // console.log(cards);
-  }, []);
+    .then((data) => {
+      setCards(data);
+    })
+    .catch((err) => console.log(err))
+    .finally(()=> setIsLoading(false));
+  }
 
   function handleLogin() {
     setIsLoggedIn(true);
@@ -58,7 +50,9 @@ function App() {
             element={
               <Movies 
                 cards={cards}
-                isLoggedIn={isLoggedIn} 
+                isLoggedIn={isLoggedIn}
+                isLoading={isLoading}
+                onGetMovies={handleGetMovies}
               />
             } 
           />
