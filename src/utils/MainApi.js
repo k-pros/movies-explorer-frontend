@@ -14,11 +14,11 @@ class MainApi {
   }
 
   // метод регистрации пользователя
-  register(email, name, password) {
+  register(name, email, password) {
     return fetch(`${this._url}/signup`, {
       method: "POST",
       headers: this._headers,
-      body: JSON.stringify({email, name, password})
+      body: JSON.stringify({name, email, password})
     })
     .then(this._handleResponse)
   };
@@ -81,7 +81,7 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-  url: "http://localhost:3000",
+  url: "http://127.0.0.1:3000",
   headers: {
     "Content-Type": "application/json",
   },
