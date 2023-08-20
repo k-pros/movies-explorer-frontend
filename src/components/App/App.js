@@ -9,13 +9,17 @@ import Profile from "../Profile/Profile";
 import moviesApi from "../../utils/MoviesApi";
 import mainApi from "../../utils/MainApi";
 import AuthForm from "../AuthForm/AuthForm";
+import InfoTooltip from "../InfoTooltip/InfoTooltip";
+import { ERROR_FETCH_MOVIES } from "../../utils/constants";
 
 function App() {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // стейт  пользователя
+  const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false); // стейт попапа с ошибкой
+  const [isLoggedIn, setIsLoggedIn] = useState(true); // стейт авторизации пользователя
   const [cards, setCards] = useState([]); // стейт карточек
   const [isLoading, setIsLoading] = useState(false); // стейт процесса загрузки данных
   const [isSuccess, setIsSuccess] = useState(false); // стейт успешной регистрации/авторизации
+  const [errorMessage, setErrorMessage] = useState(''); // сообщение с ошибкой
 
   function handleGetMovies() {
     setIsLoading(true);
@@ -25,7 +29,10 @@ function App() {
       .then((data) => {
         setCards(data);
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        console.log(err)
+        handleError(ERROR_FETCH_MOVIES)
+      })
       .finally(() => setIsLoading(false));
   }
 
@@ -46,6 +53,19 @@ function App() {
     navigate("/movies");
   }
 
+  // обработчик ошибки
+  function handleError(message) {
+    setIsSuccess(false);
+    setIsInfoTooltipPopupOpen(true);
+    setErrorMessage(message)
+  }
+
+  // обработчик закрытия попапа
+  function handleClosePopup() {
+    setIsInfoTooltipPopupOpen(false);
+    setIsSuccess(false);
+  }
+
   function onRegister(name, email, password) {
     mainApi
       .register(name, email, password)
@@ -55,6 +75,7 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+        handleError(err);
       });
   }
 
@@ -67,6 +88,7 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+        handleError(err);
       });
   }
 
@@ -105,6 +127,14 @@ function App() {
             element={<AuthForm onLogin={onLogin} />} />
           <Route path="/*" element={<PageNotFound />} />
         </Routes>
+
+        <InfoTooltip
+          isOpen={isInfoTooltipPopupOpen}
+          isSuccess={isSuccess}
+          onClose={handleClosePopup}
+          errorMessage={errorMessage}
+        />
+
       </div>
     </div>
   );
