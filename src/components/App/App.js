@@ -16,7 +16,7 @@ import { ERROR_FETCH_MOVIES } from "../../utils/constants";
 function App() {
   const navigate = useNavigate();
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false); // стейт попапа с ошибкой
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // стейт авторизации пользователя
+  const [isLoggedIn, setIsLoggedIn] = useState(true); // стейт авторизации пользователя
   const [cards, setCards] = useState([]); // стейт карточек
   const [isLoading, setIsLoading] = useState(false); // стейт процесса загрузки данных
   const [isSuccess, setIsSuccess] = useState(false); // стейт успешной регистрации/авторизации
@@ -28,23 +28,23 @@ function App() {
     email: "",
   });
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      mainApi
-        .getUserInfo()
-        .then((user) => {
-          setCurrentUser(user);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     mainApi
+  //       .getUserInfo()
+  //       .then((user) => {
+  //         setCurrentUser(user);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   }
+  // }, []);
 
   // проверка токена
-  useEffect(() => {
-    checkToken();
-  }, []);
+  // useEffect(() => {
+  //   checkToken();
+  // }, []);
 
   // функция проверки токена
   function checkToken() {
@@ -58,13 +58,13 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  // функция получения информации о фильмах
-  function handleGetMovies() {
+   useEffect(() => {
     if (isLoggedIn) {
-      moviesApi
-        .getMovies()
-        .then((data) => {
-          setCards(data);
+      Promise.all([mainApi.getUserInfo(), moviesApi.getMovies()])
+        .then(([userInfo, movies]) => {
+          setIsLoading(true)
+          setCurrentUser(userInfo)
+          localStorage.setItem('movies', JSON.stringify(movies))
         })
         .catch((err) => {
           console.log(err);
@@ -72,6 +72,11 @@ function App() {
         })
         .finally(() => setIsLoading(false));
     }
+  }, [isLoggedIn])
+
+  // функция получения фильмов из локального хранилища
+  function handleGetMovies() {
+    setCards(JSON.parse(localStorage.getItem('movies')));
   }
 
   // обработчик выхода из аккаунта
