@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import Main from "../Main/Main";
@@ -10,35 +10,74 @@ import moviesApi from "../../utils/MoviesApi";
 import mainApi from "../../utils/MainApi";
 import AuthForm from "../AuthForm/AuthForm";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { ERROR_FETCH_MOVIES } from "../../utils/constants";
 
 function App() {
   const navigate = useNavigate();
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false); // стейт попапа с ошибкой
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // стейт авторизации пользователя
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // стейт авторизации пользователя
   const [cards, setCards] = useState([]); // стейт карточек
   const [isLoading, setIsLoading] = useState(false); // стейт процесса загрузки данных
   const [isSuccess, setIsSuccess] = useState(false); // стейт успешной регистрации/авторизации
-  const [errorMessage, setErrorMessage] = useState(''); // сообщение с ошибкой
+  const [errorMessage, setErrorMessage] = useState(""); // стейт сообщения с ошибкой
 
+  // стейт текущего пользователя
+  const [currentUser, setCurrentUser] = useState({
+    name: "",
+    email: "",
+  });
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      mainApi
+        .getUserInfo()
+        .then((user) => {
+          setCurrentUser(user);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, []);
+
+  // проверка токена
+  useEffect(() => {
+    checkToken();
+  }, []);
+
+  // функция проверки токена
+  function checkToken() {
+    mainApi
+      .checkToken()
+      .then((res) => {
+        if (res) {
+          setIsLoggedIn(true);
+        }
+      })
+      .catch((err) => console.log(err));
+  }
+
+  // функция получения информации о фильмах
   function handleGetMovies() {
-    setIsLoading(true);
-
-    moviesApi
-      .getMovies()
-      .then((data) => {
-        setCards(data);
-      })
-      .catch((err) => {
-        console.log(err)
-        handleError(ERROR_FETCH_MOVIES)
-      })
-      .finally(() => setIsLoading(false));
+    if (isLoggedIn) {
+      moviesApi
+        .getMovies()
+        .then((data) => {
+          setCards(data);
+        })
+        .catch((err) => {
+          console.log(err);
+          handleError(ERROR_FETCH_MOVIES);
+        })
+        .finally(() => setIsLoading(false));
+    }
   }
 
   // обработчик выхода из аккаунта
   function handleSignOut() {
     setIsLoggedIn(false);
+    localStorage.removeItem("token");
     navigate("/");
   }
 
@@ -57,7 +96,7 @@ function App() {
   function handleError(message) {
     setIsSuccess(false);
     setIsInfoTooltipPopupOpen(true);
-    setErrorMessage(message)
+    setErrorMessage(message);
   }
 
   // обработчик закрытия попапа
@@ -82,7 +121,11 @@ function App() {
   function onLogin(email, password) {
     mainApi
       .autorize(email, password)
-      .then(() => {
+      .then((data) => {
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+          // checkToken();
+        }
         navigate("/movies");
         handleLogin();
       })
@@ -93,50 +136,49 @@ function App() {
   }
 
   return (
-    <div className="page">
-      <div className="page__container">
-        <Routes>
-          <Route path="/" element={<Main isLoggedIn={isLoggedIn} />} />
-          <Route
-            path="/movies"
-            element={
-              <Movies
-                cards={cards}
-                isLoggedIn={isLoggedIn}
-                isLoading={isLoading}
-                onGetMovies={handleGetMovies}
-              />
-            }
-          />
-          <Route
-            path="/saved-movies"
-            element={<SavedMovies isLoggedIn={isLoggedIn} />}
-          />
-          <Route
-            path="/profile"
-            element={
-              <Profile isLoggedIn={isLoggedIn} onSignOut={handleSignOut} />
-            }
-          />
-          <Route
-            path="/signup"
-            element={<AuthForm onRegister={onRegister} />}
-          />
-          <Route 
-            path="/signin" 
-            element={<AuthForm onLogin={onLogin} />} />
-          <Route path="/*" element={<PageNotFound />} />
-        </Routes>
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="page">
+        <div className="page__container">
+          <Routes>
+            <Route path="/" element={<Main isLoggedIn={isLoggedIn} />} />
+            <Route
+              path="/movies"
+              element={
+                <Movies
+                  cards={cards}
+                  isLoggedIn={isLoggedIn}
+                  isLoading={isLoading}
+                  onGetMovies={handleGetMovies}
+                />
+              }
+            />
+            <Route
+              path="/saved-movies"
+              element={<SavedMovies isLoggedIn={isLoggedIn} />}
+            />
+            <Route
+              path="/profile"
+              element={
+                <Profile isLoggedIn={isLoggedIn} onSignOut={handleSignOut} />
+              }
+            />
+            <Route
+              path="/signup"
+              element={<AuthForm onRegister={onRegister} />}
+            />
+            <Route path="/signin" element={<AuthForm onLogin={onLogin} />} />
+            <Route path="/*" element={<PageNotFound />} />
+          </Routes>
 
-        <InfoTooltip
-          isOpen={isInfoTooltipPopupOpen}
-          isSuccess={isSuccess}
-          onClose={handleClosePopup}
-          errorMessage={errorMessage}
-        />
-
+          <InfoTooltip
+            isOpen={isInfoTooltipPopupOpen}
+            isSuccess={isSuccess}
+            onClose={handleClosePopup}
+            errorMessage={errorMessage}
+          />
+        </div>
       </div>
-    </div>
+    </CurrentUserContext.Provider>
   );
 }
 

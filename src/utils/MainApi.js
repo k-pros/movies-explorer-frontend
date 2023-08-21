@@ -78,12 +78,21 @@ class MainApi {
     })
       .then(this._handleResponse);
   }
+
+  checkToken(jwt) {
+    return fetch(`${this._url}/users/me`, {
+      method: 'GET',
+      headers: this._headers,
+    })
+      .then(this._handleResponse);
+  }
 }
 
 const mainApi = new MainApi({
   url: "http://127.0.0.1:3000",
   headers: {
     "Content-Type": "application/json",
+    "Authorization" : `Bearer ${localStorage.getItem("token")}`
   },
 });
 
