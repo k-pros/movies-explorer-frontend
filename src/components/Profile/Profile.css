@@ -1,43 +1,57 @@
-.profile {
+.profile-form {
   margin: 74px auto 70px;
   width: 410px;
-  box-sizing: border-box;
 }
 
-.profile__title {
+.profile-form__input-container {
+  width: 100%;
+  position: relative;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e8e8e8;
+  margin-bottom: 17px;
+}
+
+.profile-form__input-container:nth-of-type(2) {
+  padding: 0;
+  border: 0;
   margin: 0;
+}
+
+.profile-form__input {
+  width: 100%;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding: 0 0 0 50px;
+  text-align: right;
+  box-sizing: border-box;
+  border: 0;
+  background-color: #fafafa;
+}
+
+.profile-form__input:disabled {
+  color: #000;
+}
+
+.profile-form__label {
+  position: absolute;
+  left: 0;
+  top: 5px;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+
+.profile__title {
+  margin: 0 0 123px;
   font-size: 24px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
   text-align: center;
-}
-
-.profile__list {
-  list-style-type: none;
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-  margin: 123px 0 0;
-  gap: 17px;
-}
-
-.profile__item {
-  border-bottom: 1px solid #e8e8e8;
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: 16px;
-}
-
-.profile__item:last-of-type {
-  border: 0;
-  padding: 0;
-}
-
-.profile__user {
-  margin: 0;
-  font-size: 11px;
-  font-style: normal;
 }
 
 .profile__buttons {
@@ -61,7 +75,7 @@
 }
 
 .profile__error {
-  margin-top: 189px;
+  margin: 0;
   visibility: hidden;
 }
 
@@ -81,15 +95,16 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  border: 0;
 }
 
 @media screen and (max-width: 800px) {
-  .profile {
+  .profile-form {
     margin-top: 236px;
   }
 
-  .profile__list {
-    margin-top: 96px;
+  .profile__title {
+    margin-bottom: 96px;
   }
 
   .profile__buttons {
@@ -98,13 +113,13 @@
 }
 
 @media screen and (max-width: 500px) {
-  .profile {
+  .profile-form {
     width: 260px;
     margin-top: 70px;
   }
 
-  .profile__list {
-    margin-top: 80px;
+  .profile__title {
+    margin-bottom: 80px;
   }
 
   .profile__buttons {

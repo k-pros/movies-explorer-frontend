@@ -11,7 +11,7 @@ import mainApi from "../../utils/MainApi";
 import AuthForm from "../AuthForm/AuthForm";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import { ERROR_FETCH_MOVIES } from "../../utils/constants";
+import { ERROR_FETCH_MOVIES, ERROR_PROFILE } from "../../utils/constants";
 
 function App() {
   const navigate = useNavigate();
@@ -20,6 +20,7 @@ function App() {
   const [cards, setCards] = useState([]); // стейт карточек
   const [isLoading, setIsLoading] = useState(false); // стейт процесса загрузки данных
   const [isSuccess, setIsSuccess] = useState(false); // стейт успешной регистрации/авторизации
+  const [isProfileUpdating, setIsProfileUpdating] = useState(false); // стейт редактирования профайла
   const [errorMessage, setErrorMessage] = useState(""); // стейт сообщения с ошибкой
 
   // стейт текущего пользователя
@@ -28,23 +29,29 @@ function App() {
     email: "",
   });
 
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     mainApi
-  //       .getUserInfo()
-  //       .then((user) => {
-  //         setCurrentUser(user);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }
-  // }, []);
-
+  // получение информации о пользователе
+  useEffect(() => {
+    if (isLoggedIn) {
+      getUserInfo();
+    }
+  }, []);
+  
   // проверка токена
-  // useEffect(() => {
-  //   checkToken();
-  // }, []);
+  useEffect(() => {
+    checkToken();
+  }, []);
+  
+  
+  function getUserInfo() {
+    mainApi
+      .getUserInfo()
+      .then((user) => {
+        setCurrentUser(user);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   // функция проверки токена
   function checkToken() {
@@ -58,13 +65,13 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-   useEffect(() => {
+  useEffect(() => {
     if (isLoggedIn) {
       Promise.all([mainApi.getUserInfo(), moviesApi.getMovies()])
         .then(([userInfo, movies]) => {
-          setIsLoading(true)
-          setCurrentUser(userInfo)
-          localStorage.setItem('movies', JSON.stringify(movies))
+          setIsLoading(true);
+          setCurrentUser(userInfo);
+          localStorage.setItem("movies", JSON.stringify(movies));
         })
         .catch((err) => {
           console.log(err);
@@ -72,17 +79,18 @@ function App() {
         })
         .finally(() => setIsLoading(false));
     }
-  }, [isLoggedIn])
+  }, [isLoggedIn]);
 
   // функция получения фильмов из локального хранилища
   function handleGetMovies() {
-    setCards(JSON.parse(localStorage.getItem('movies')));
+    setCards(JSON.parse(localStorage.getItem("movies")));
   }
 
   // обработчик выхода из аккаунта
   function handleSignOut() {
     setIsLoggedIn(false);
-    localStorage.removeItem("token");
+    // localStorage.removeItem("token");
+    localStorage.clear()
     navigate("/");
   }
 
@@ -110,6 +118,7 @@ function App() {
     setIsSuccess(false);
   }
 
+  // функция регистрации пользователя
   function onRegister(name, email, password) {
     mainApi
       .register(name, email, password)
@@ -123,13 +132,13 @@ function App() {
       });
   }
 
+  // функция авторизации пользователя
   function onLogin(email, password) {
     mainApi
       .autorize(email, password)
       .then((data) => {
         if (data.token) {
           localStorage.setItem("token", data.token);
-          // checkToken();
         }
         navigate("/movies");
         handleLogin();
@@ -138,6 +147,20 @@ function App() {
         console.log(err);
         handleError(err);
       });
+  }
+
+  // функция обновления профиля
+  function onUpdateProfile(name, email) {
+    mainApi
+      .updateUser(name, email)
+      .then(() => {
+        setIsProfileUpdating(false)
+        getUserInfo();
+      })
+      .catch((err) => {
+        console.log(err);
+        setErrorMessage(ERROR_PROFILE);
+      })
   }
 
   return (
@@ -164,7 +187,15 @@ function App() {
             <Route
               path="/profile"
               element={
-                <Profile isLoggedIn={isLoggedIn} onSignOut={handleSignOut} />
+                <Profile
+                  isLoggedIn={isLoggedIn}
+                  onSignOut={handleSignOut}
+                  onUpdateProfile={onUpdateProfile}
+                  currentUser={currentUser}
+                  setIsProfileUpdating={setIsProfileUpdating}
+                  isProfileUpdating={isProfileUpdating}
+                  errorMessage={errorMessage}
+                />
               }
             />
             <Route
