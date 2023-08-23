@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./SearchForm.css";
 
 function SearchForm({
@@ -6,6 +5,7 @@ function SearchForm({
   setSearchQuery,
   onToggleSwitch,
   isToggleShortMovies,
+  searchQuery
 }) {
 
   function handleToggle() {
@@ -25,6 +25,7 @@ function SearchForm({
           placeholder="Фильм"
           className="search-form__input"
           onChange={handleChange}
+          value={searchQuery || ""}
         />
         <button
           className="search-form__btn btn"

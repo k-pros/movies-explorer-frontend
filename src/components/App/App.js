@@ -18,11 +18,27 @@ function App() {
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false); // стейт попапа с ошибкой
   const [isLoggedIn, setIsLoggedIn] = useState(true); // стейт авторизации пользователя
   const [cards, setCards] = useState([]); // стейт карточек для рендеринга
-  const [allMovies, setAllMovies] = useState([]) // стейт всех фильмов
-  const [foundMovies, setFoundMovies] = useState([]) // стейт найденных фильмов
-  const [foundShortMovies, setFoundShortMovies] = useState([]) // стейт найденных короткометражных фильмов
-  const [moviesForRender, setMoviesForRender] = useState([]) // стейт фильмов для рендеринга 
-  const [searchQuery, setSearchQuery] = useState("") // стейт поискового запроса фильмов
+  // стейт всех фильмов
+  const [allMovies, setAllMovies] = useState(
+    JSON.parse(localStorage.getItem("movies")) || []
+  );
+  // стейт найденных фильмов
+  const [foundMovies, setFoundMovies] = useState(
+    JSON.parse(localStorage.getItem("foundMovies")) || []
+  );
+  // стейт найденных короткометражных фильмов
+  const [foundShortMovies, setFoundShortMovies] = useState(
+    JSON.parse(localStorage.getItem("foundShortMovies")) || []
+  );
+  // стейт переключателя короткометражек
+  const [isToggleShortMovies, setIsToggleShortMovies] = useState(
+    JSON.parse(localStorage.getItem("isToggleShortMovies")) || false
+  );
+  // стейт поискового запроса фильмов
+  const [searchQuery, setSearchQuery] = useState(
+    localStorage.getItem("searchQuery") || ""
+  );
+  const [moviesForRender, setMoviesForRender] = useState([]); // стейт фильмов для рендеринга
   const [isLoading, setIsLoading] = useState(false); // стейт процесса загрузки данных
   const [isSuccess, setIsSuccess] = useState(false); // стейт успешной регистрации/авторизации
   const [isProfileUpdating, setIsProfileUpdating] = useState(false); // стейт редактирования профайла
@@ -40,18 +56,22 @@ function App() {
       getUserInfo();
     }
   }, []);
-  
+
   // проверка токена
   // useEffect(() => {
   //   checkToken();
   // }, []);
 
-  // 
   useEffect(() => {
     setCards(moviesForRender);
   }, [moviesForRender]);
-  
-  
+
+  useEffect(() => {
+    localStorage.setItem("foundMovies", JSON.stringify(foundMovies));
+    localStorage.setItem("foundShortMovies", JSON.stringify(foundShortMovies));
+    localStorage.setItem("isToggleShortMovies", isToggleShortMovies);
+  }, [foundMovies, foundShortMovies, isToggleShortMovies]);
+
   function getUserInfo() {
     mainApi
       .getUserInfo()
@@ -82,7 +102,7 @@ function App() {
           setIsLoading(true);
           setCurrentUser(userInfo);
           localStorage.setItem("movies", JSON.stringify(movies));
-          handleGetMovies()
+          handleGetMovies();
         })
         .catch((err) => {
           console.log(err);
@@ -100,7 +120,7 @@ function App() {
   // обработчик выхода из аккаунта
   function handleSignOut() {
     setIsLoggedIn(false);
-    localStorage.clear()
+    localStorage.clear();
     navigate("/");
   }
 
@@ -164,13 +184,13 @@ function App() {
     mainApi
       .updateUser(name, email)
       .then(() => {
-        setIsProfileUpdating(false)
+        setIsProfileUpdating(false);
         getUserInfo();
       })
       .catch((err) => {
         console.log(err);
         setErrorMessage(ERROR_PROFILE);
-      })
+      });
   }
 
   return (
@@ -195,6 +215,8 @@ function App() {
                   setMoviesForRender={setMoviesForRender}
                   searchQuery={searchQuery}
                   setSearchQuery={setSearchQuery}
+                  isToggleShortMovies={isToggleShortMovies}
+                  setIsToggleShortMovies={setIsToggleShortMovies}
                 />
               }
             />

@@ -20,36 +20,37 @@ function Movies({
   setSearchQuery,
   foundShortMovies,
   setFoundShortMovies,
-  setMoviesForRender
+  setMoviesForRender,
+  isToggleShortMovies,
+  setIsToggleShortMovies,
 }) {
   const { width } = useWindowSize(); // ширина экрана
   const [cardsForRender, setCardsForRender] = useState(0); // стейт карточек для отображения
   const [amountCards, setAmountCards] = useState(0); // стейт кол-ва карточек в зависимости от ширины экрана
   const [amountCardsToAdd, setAmountCardsToAdd] = useState(0); // стейт кол-ва карточек для добавления
   const [index, setIndex] = useState(0); // стейт кол-ва отображённых на экране карточек
-  const [isToggleShortMovies, setIsToggleShortMovies] = useState(false); // стейт переключателя короткометражек
 
   useEffect(() => {
     if (index === 0) setIndex(amountCards);
     setCardsForRender(cards.slice(0, index));
   }, [amountCards, index, cards]);
 
-  // задание стейта для рендеринга в зависимости от состояния переключателя 
+  // задание стейта для рендеринга в зависимости от состояния переключателя
   useEffect(() => {
     setMoviesForRender(
       isToggleShortMovies && foundMovies.length > 0
         ? foundShortMovies
         : foundMovies
     );
-  }, [isToggleShortMovies]); 
-  
+  }, [isToggleShortMovies]);
+
   useEffect(() => {
     setFoundShortMovies(searchShortMovies(foundMovies));
-  }, [foundMovies])
-  
+  }, [foundMovies]);
+
   useEffect(() => {
     setMoviesForRender(isToggleShortMovies ? foundShortMovies : foundMovies);
-  }, [foundMovies, foundShortMovies])
+  }, [foundMovies, foundShortMovies]);
 
   // установка стейтов количества карточек в зависимости от ширины экрана
   useEffect(() => {
@@ -75,13 +76,14 @@ function Movies({
     e.preventDefault();
 
     setIsLoading(true);
-    setFoundMovies(searchMovies(allMovies, searchQuery))
+    setFoundMovies(searchMovies(allMovies, searchQuery));
+    localStorage.setItem("searchQuery", searchQuery);
     setIsLoading(false);
   }
 
-  function handleToggleSwitch () {
-    setIsToggleShortMovies(!isToggleShortMovies) 
-   }
+  function handleToggleSwitch() {
+    setIsToggleShortMovies(!isToggleShortMovies);
+  }
 
   return (
     <>
@@ -89,6 +91,7 @@ function Movies({
       <main className="content">
         <SearchForm
           onSearchMovies={handleSearchMovies}
+          searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           onToggleSwitch={handleToggleSwitch}
           isToggleShortMovies={isToggleShortMovies}
