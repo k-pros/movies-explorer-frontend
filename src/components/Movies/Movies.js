@@ -6,19 +6,50 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import { useWindowSize } from "@uidotdev/usehooks";
 import Preloader from "../Preloader/Preloader";
+import { searchMovies, searchShortMovies } from "../../utils/searchMovies";
 
-function Movies({ cards, isLoggedIn, isLoading, onGetMovies }) {
+function Movies({
+  cards,
+  isLoggedIn,
+  isLoading,
+  setIsLoading,
+  foundMovies,
+  setFoundMovies,
+  allMovies,
+  searchQuery,
+  setSearchQuery,
+  foundShortMovies,
+  setFoundShortMovies,
+  setMoviesForRender
+}) {
   const { width } = useWindowSize(); // ширина экрана
   const [cardsForRender, setCardsForRender] = useState(0); // стейт карточек для отображения
   const [amountCards, setAmountCards] = useState(0); // стейт кол-ва карточек в зависимости от ширины экрана
-  const [amountCardsToAdd, setAmountCardsToAdd] = useState(0); // стейт кол-ва карточек для добавления 
+  const [amountCardsToAdd, setAmountCardsToAdd] = useState(0); // стейт кол-ва карточек для добавления
   const [index, setIndex] = useState(0); // стейт кол-ва отображённых на экране карточек
+  const [isToggleShortMovies, setIsToggleShortMovies] = useState(false); // стейт переключателя короткометражек
 
   useEffect(() => {
     if (index === 0) setIndex(amountCards);
     setCardsForRender(cards.slice(0, index));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amountCards, index, cards]);
+
+  // задание стейта для рендеринга в зависимости от состояния переключателя 
+  useEffect(() => {
+    setMoviesForRender(
+      isToggleShortMovies && foundMovies.length > 0
+        ? foundShortMovies
+        : foundMovies
+    );
+  }, [isToggleShortMovies]); 
+  
+  useEffect(() => {
+    setFoundShortMovies(searchShortMovies(foundMovies));
+  }, [foundMovies])
+  
+  useEffect(() => {
+    setMoviesForRender(isToggleShortMovies ? foundShortMovies : foundMovies);
+  }, [foundMovies, foundShortMovies])
 
   // установка стейтов количества карточек в зависимости от ширины экрана
   useEffect(() => {
@@ -29,26 +60,39 @@ function Movies({ cards, isLoggedIn, isLoading, onGetMovies }) {
       setAmountCards(8);
       setAmountCardsToAdd(2);
     } else {
-      setAmountCards(1);
-      setAmountCardsToAdd(1);
+      setAmountCards(5);
+      setAmountCardsToAdd(2);
     }
   }, [width]);
 
-  // метод добавления дополнительных карточек при клике на кнопку
+  // добавление дополнительных карточек при клике на кнопку
   function addMoreCards() {
     setIndex(index + amountCardsToAdd);
     setCardsForRender(cards.slice(0, index));
   }
 
-  function handleSearchMovies() {
-    onGetMovies();
+  function handleSearchMovies(e) {
+    e.preventDefault();
+
+    setIsLoading(true);
+    setFoundMovies(searchMovies(allMovies, searchQuery))
+    setIsLoading(false);
   }
+
+  function handleToggleSwitch () {
+    setIsToggleShortMovies(!isToggleShortMovies) 
+   }
 
   return (
     <>
       <Header isLoggedIn={isLoggedIn} />
       <main className="content">
-        <SearchForm onSearchMovies={onGetMovies} />
+        <SearchForm
+          onSearchMovies={handleSearchMovies}
+          setSearchQuery={setSearchQuery}
+          onToggleSwitch={handleToggleSwitch}
+          isToggleShortMovies={isToggleShortMovies}
+        />
         {isLoading ? (
           <Preloader />
         ) : cardsForRender.length > 0 ? (
@@ -57,7 +101,9 @@ function Movies({ cards, isLoggedIn, isLoading, onGetMovies }) {
             <button
               type="button"
               aria-label="Ещё"
-              className={`movies-button btn ${cards.length > index ? "movies-button_visible" : ""}`}
+              className={`movies-button btn ${
+                cards.length > index ? "movies-button_visible" : ""
+              }`}
               onClick={addMoreCards}
             >
               Ещё

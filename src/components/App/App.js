@@ -17,7 +17,12 @@ function App() {
   const navigate = useNavigate();
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false); // стейт попапа с ошибкой
   const [isLoggedIn, setIsLoggedIn] = useState(true); // стейт авторизации пользователя
-  const [cards, setCards] = useState([]); // стейт карточек
+  const [cards, setCards] = useState([]); // стейт карточек для рендеринга
+  const [allMovies, setAllMovies] = useState([]) // стейт всех фильмов
+  const [foundMovies, setFoundMovies] = useState([]) // стейт найденных фильмов
+  const [foundShortMovies, setFoundShortMovies] = useState([]) // стейт найденных короткометражных фильмов
+  const [moviesForRender, setMoviesForRender] = useState([]) // стейт фильмов для рендеринга 
+  const [searchQuery, setSearchQuery] = useState("") // стейт поискового запроса фильмов
   const [isLoading, setIsLoading] = useState(false); // стейт процесса загрузки данных
   const [isSuccess, setIsSuccess] = useState(false); // стейт успешной регистрации/авторизации
   const [isProfileUpdating, setIsProfileUpdating] = useState(false); // стейт редактирования профайла
@@ -37,9 +42,14 @@ function App() {
   }, []);
   
   // проверка токена
+  // useEffect(() => {
+  //   checkToken();
+  // }, []);
+
+  // 
   useEffect(() => {
-    checkToken();
-  }, []);
+    setCards(moviesForRender);
+  }, [moviesForRender]);
   
   
   function getUserInfo() {
@@ -72,6 +82,7 @@ function App() {
           setIsLoading(true);
           setCurrentUser(userInfo);
           localStorage.setItem("movies", JSON.stringify(movies));
+          handleGetMovies()
         })
         .catch((err) => {
           console.log(err);
@@ -83,13 +94,12 @@ function App() {
 
   // функция получения фильмов из локального хранилища
   function handleGetMovies() {
-    setCards(JSON.parse(localStorage.getItem("movies")));
+    setAllMovies(JSON.parse(localStorage.getItem("movies")));
   }
 
   // обработчик выхода из аккаунта
   function handleSignOut() {
     setIsLoggedIn(false);
-    // localStorage.removeItem("token");
     localStorage.clear()
     navigate("/");
   }
@@ -176,7 +186,15 @@ function App() {
                   cards={cards}
                   isLoggedIn={isLoggedIn}
                   isLoading={isLoading}
-                  onGetMovies={handleGetMovies}
+                  setIsLoading={setIsLoading}
+                  allMovies={allMovies}
+                  foundMovies={foundMovies}
+                  setFoundMovies={setFoundMovies}
+                  foundShortMovies={foundShortMovies}
+                  setFoundShortMovies={setFoundShortMovies}
+                  setMoviesForRender={setMoviesForRender}
+                  searchQuery={searchQuery}
+                  setSearchQuery={setSearchQuery}
                 />
               }
             />

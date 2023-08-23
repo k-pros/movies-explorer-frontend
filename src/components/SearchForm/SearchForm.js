@@ -1,22 +1,45 @@
+import { useState } from "react";
 import "./SearchForm.css";
 
-function SearchForm( { onSearchMovies }) {
+function SearchForm({
+  onSearchMovies,
+  setSearchQuery,
+  onToggleSwitch,
+  isToggleShortMovies,
+}) {
+
+  function handleToggle() {
+    onToggleSwitch();
+  }
+
+  function handleChange(e) {
+    const { value } = e.target;
+    setSearchQuery(value);
+  }
+
   return (
     <section className="search">
-      <div className="search-form">
-        <input type="text" placeholder="Фильм" className="search-form__input" />
+      <form onSubmit={onSearchMovies} className="search-form">
+        <input
+          type="text"
+          placeholder="Фильм"
+          className="search-form__input"
+          onChange={handleChange}
+        />
         <button
           className="search-form__btn btn"
-          type="button"
+          type="submit"
           aria-label="Найти"
-          onClick={onSearchMovies}
         ></button>
-      </div>
+      </form>
       <div className="search__container-toggle">
         <button
           type="button"
           aria-label="Переключатель"
-          className="search__toggle btn"
+          className={`search__toggle btn ${
+            isToggleShortMovies ? "search__toggle_active" : ""
+          }`}
+          onClick={handleToggle}
         ></button>
         <p className="search__toggle-name">Короткометражки</p>
       </div>
