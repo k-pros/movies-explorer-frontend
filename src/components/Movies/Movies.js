@@ -7,6 +7,16 @@ import Footer from "../Footer/Footer";
 import { useWindowSize } from "@uidotdev/usehooks";
 import Preloader from "../Preloader/Preloader";
 import { searchMovies, searchShortMovies } from "../../utils/searchMovies";
+import {
+  DESCTOP_CARD_COUNT,
+  DESCTOP_MORE_CARD_COUNT,
+  DESCTOP_VIEW_WIDTH,
+  MOBILE_CARD_COUNT,
+  MOBILE_MORE_CARD_COUNT,
+  TABLET_CARD_COUNT,
+  TABLET_MORE_CARD_COUNT,
+  TABLET_VIEW_WIDTH,
+} from "../../utils/constants";
 
 function Movies({
   cards,
@@ -27,7 +37,6 @@ function Movies({
   savedMovies,
   onDeleteMovie,
 }) {
-  
   const { width } = useWindowSize(); // ширина экрана
   const [cardsForRender, setCardsForRender] = useState(0); // стейт карточек для отображения
   const [amountCards, setAmountCards] = useState(0); // стейт кол-ва карточек в зависимости от ширины экрана
@@ -55,15 +64,15 @@ function Movies({
 
   // установка стейтов количества карточек в зависимости от ширины экрана
   useEffect(() => {
-    if (width >= 992) {
-      setAmountCards(12);
-      setAmountCardsToAdd(3);
-    } else if (width >= 620) {
-      setAmountCards(8);
-      setAmountCardsToAdd(2);
+    if (width >= DESCTOP_VIEW_WIDTH) {
+      setAmountCards(DESCTOP_CARD_COUNT);
+      setAmountCardsToAdd(DESCTOP_MORE_CARD_COUNT);
+    } else if (width >= TABLET_VIEW_WIDTH) {
+      setAmountCards(TABLET_CARD_COUNT);
+      setAmountCardsToAdd(TABLET_MORE_CARD_COUNT);
     } else {
-      setAmountCards(5);
-      setAmountCardsToAdd(2);
+      setAmountCards(MOBILE_CARD_COUNT);
+      setAmountCardsToAdd(MOBILE_MORE_CARD_COUNT);
     }
   }, [width]);
 

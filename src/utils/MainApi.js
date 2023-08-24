@@ -1,3 +1,5 @@
+import { MAIN_API_URL } from "./constants";
+
 class MainApi {
   constructor({ url, headers }) {
     this._url = url;
@@ -90,7 +92,7 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-  url: "http://127.0.0.1:3000",
+  url: MAIN_API_URL,
   headers: {
     "Content-Type": "application/json",
     "Authorization" : `Bearer ${localStorage.getItem("token")}`

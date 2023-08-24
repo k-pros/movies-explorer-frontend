@@ -57,7 +57,6 @@ function MoviesCard({ movie, onSaveMovie, savedMovies, onDeleteMovie }) {
     onDeleteMovie(movie);
   }
 
-
   if (location.pathname === "/movies") {
     return (
         <li className="card">
@@ -91,21 +90,6 @@ function MoviesCard({ movie, onSaveMovie, savedMovies, onDeleteMovie }) {
       </>
     );
   }
-
-  // return(
-  //   <li className="card">
-  //     <div className="card__container">
-  //       <div className="card__description">
-  //         <h2 className="card__title">{movie.nameRU}</h2>
-  //         <p className="card__time">{convertDuration(movie.duration)}</p>
-  //       </div>
-  //       <div className={`card__save-btn btn ${isSavedMovie ? "card__save-btn_active" : ""}`} onClick={handleSaveButton}></div>
-  //     </div>
-  //     <Link to={movie.trailerLink} className="card__link link" target="_blank">
-  //       <img src={`https://api.nomoreparties.co${movie.image.url}`} alt="Обложка фильма" className="card__image" />
-  //     </Link>
-  //   </li>
-  // );
 }
 
 export default MoviesCard;
