@@ -23,7 +23,11 @@ function Movies({
   setMoviesForRender,
   isToggleShortMovies,
   setIsToggleShortMovies,
+  onSaveMovie,
+  savedMovies,
+  onDeleteMovie,
 }) {
+  
   const { width } = useWindowSize(); // ширина экрана
   const [cardsForRender, setCardsForRender] = useState(0); // стейт карточек для отображения
   const [amountCards, setAmountCards] = useState(0); // стейт кол-ва карточек в зависимости от ширины экрана
@@ -42,15 +46,12 @@ function Movies({
         ? foundShortMovies
         : foundMovies
     );
-  }, [isToggleShortMovies]);
+  }, [isToggleShortMovies, foundMovies, foundShortMovies]);
 
   useEffect(() => {
     setFoundShortMovies(searchShortMovies(foundMovies));
+    setIsLoading(false);
   }, [foundMovies]);
-
-  useEffect(() => {
-    setMoviesForRender(isToggleShortMovies ? foundShortMovies : foundMovies);
-  }, [foundMovies, foundShortMovies]);
 
   // установка стейтов количества карточек в зависимости от ширины экрана
   useEffect(() => {
@@ -78,7 +79,7 @@ function Movies({
     setIsLoading(true);
     setFoundMovies(searchMovies(allMovies, searchQuery));
     localStorage.setItem("searchQuery", searchQuery);
-    setIsLoading(false);
+    // setIsLoading(false);
   }
 
   function handleToggleSwitch() {
@@ -100,7 +101,12 @@ function Movies({
           <Preloader />
         ) : cardsForRender.length > 0 ? (
           <>
-            <MoviesCardList cards={cardsForRender} />
+            <MoviesCardList
+              cards={cardsForRender}
+              onSaveMovie={onSaveMovie}
+              savedMovies={savedMovies}
+              onDeleteMovie={onDeleteMovie}
+            />
             <button
               type="button"
               aria-label="Ещё"

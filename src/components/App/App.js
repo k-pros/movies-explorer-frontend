@@ -43,6 +43,7 @@ function App() {
   const [isSuccess, setIsSuccess] = useState(false); // стейт успешной регистрации/авторизации
   const [isProfileUpdating, setIsProfileUpdating] = useState(false); // стейт редактирования профайла
   const [errorMessage, setErrorMessage] = useState(""); // стейт сообщения с ошибкой
+  const [savedMovies, setSavedMovies] = useState([]); // стейт сохранённых фильмов
 
   // стейт текущего пользователя
   const [currentUser, setCurrentUser] = useState({
@@ -58,9 +59,9 @@ function App() {
   }, []);
 
   // проверка токена
-  // useEffect(() => {
-  //   checkToken();
-  // }, []);
+  useEffect(() => {
+    checkToken();
+  }, []);
 
   useEffect(() => {
     setCards(moviesForRender);
@@ -94,6 +95,10 @@ function App() {
       })
       .catch((err) => console.log(err));
   }
+
+  useEffect(() => {
+    getSavedMovies();
+  }, [currentUser]);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -146,6 +151,40 @@ function App() {
   function handleClosePopup() {
     setIsInfoTooltipPopupOpen(false);
     setIsSuccess(false);
+  }
+
+  // получение сохранённых фильмов
+  function getSavedMovies() {
+    setIsLoading(true);
+    mainApi
+      .getMovies()
+      .then((movies) => {
+        setSavedMovies(movies.filter((item) => {
+          return item.owner._id === currentUser._id;
+        }));
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoading(false));
+  }
+
+  // обработчик сохранения фильмов
+  function handleSaveMovie(movie) {
+    mainApi
+      .saveMovie(movie)
+      .then(() => {
+        getSavedMovies();
+      })
+      .catch((err) => console.log(err));
+  }
+
+  // обработчик удаления фильмов
+  function handleDeleteMovie(movie) {
+    mainApi
+      .deleteMovie(movie._id)
+      .then(() => {
+        getSavedMovies();
+      })
+      .catch((err) => console.log(err));
   }
 
   // функция регистрации пользователя
@@ -217,12 +256,28 @@ function App() {
                   setSearchQuery={setSearchQuery}
                   isToggleShortMovies={isToggleShortMovies}
                   setIsToggleShortMovies={setIsToggleShortMovies}
+                  onSaveMovie={handleSaveMovie}
+                  savedMovies={savedMovies}
+                  onDeleteMovie={handleDeleteMovie}
                 />
               }
             />
             <Route
               path="/saved-movies"
-              element={<SavedMovies isLoggedIn={isLoggedIn} />}
+              element={
+                <SavedMovies
+                  isLoggedIn={isLoggedIn}
+                  isLoading={isLoading}
+                  setIsLoading={setIsLoading}
+                  cards={cards}
+                  setMoviesForRender={setMoviesForRender}
+                  savedMovies={savedMovies}
+                  onDeleteMovie={handleDeleteMovie}
+                  searchQuery={searchQuery}
+                  setSearchQuery={setSearchQuery}
+                  moviesForRender={moviesForRender}
+                />
+              }
             />
             <Route
               path="/profile"
@@ -235,6 +290,8 @@ function App() {
                   setIsProfileUpdating={setIsProfileUpdating}
                   isProfileUpdating={isProfileUpdating}
                   errorMessage={errorMessage}
+                  setMoviesForRender={setMoviesForRender}
+                  getSavedMovies={getSavedMovies}
                 />
               }
             />

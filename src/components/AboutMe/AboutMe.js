@@ -13,11 +13,7 @@ function AboutMe() {
             <h3 className="about-me__name">Кирилл</h3>
             <p className="about-me__about">Фронтенд-разработчик, 35 лет</p>
             <p className="about-me__text text">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-              Voluptas, aspernatur voluptatem. Sit eaque aperiam nisi quos
-              impedit nam eos temporibus reprehenderit non debitis commodi
-              tempore inventore, facilis, cumque alias ducimus, earum
-              accusantium veniam quod ea ipsum voluptas. Obcaecati, animi autem!
+            «Логика может привести Вас от пункта А к пункту Б, а воображение — куда угодно» Альберт Эйнштейн
             </p>
           </div>
           <Link

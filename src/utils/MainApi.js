@@ -53,17 +53,18 @@ class MainApi {
   }
 
   // метод получения с сервера сохранённых фильмов
-  getMovie() {
-    return fetch(`${this.url}/movies`, {
+  getMovies() {
+    return fetch(`${this._url}/movies`, {
       method: "GET",
       headers: this._headers
     })
+      .then(this._handleResponse);
   }
 
   // метода сохранения фильмов
   saveMovie(movie) {
     return fetch(`${this._url}/movies`, {
-      method: "PATCH",
+      method: "POST",
       headers: this._headers,
       body: JSON.stringify(movie)
     })
