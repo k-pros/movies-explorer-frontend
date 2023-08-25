@@ -5,6 +5,9 @@ export const ERROR_FETCH_MOVIES = 'Во время запроса произош
 export const ERROR_REGISTER = 'При регистрации пользователя произошла ошибка.'
 export const ERROR_PROFILE = 'При обновлении профиля произошла ошибка.'
 
+export const SUCCESS_PROFILE_UPDATE = 'Профиль успешно обновлён!'
+export const SUCCESS_REGISTER = 'Вы успешно зарегистрировались!'
+
 export const DESCTOP_VIEW_WIDTH = 992;
 export const TABLET_VIEW_WIDTH = 620;
 

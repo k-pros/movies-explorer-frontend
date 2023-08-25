@@ -11,7 +11,7 @@ import mainApi from "../../utils/MainApi";
 import AuthForm from "../AuthForm/AuthForm";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import { ERROR_FETCH_MOVIES, ERROR_PROFILE } from "../../utils/constants";
+import { ERROR_FETCH_MOVIES, ERROR_PROFILE, SUCCESS_PROFILE_UPDATE } from "../../utils/constants";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 function App() {
@@ -41,8 +41,9 @@ function App() {
   );
   const [moviesForRender, setMoviesForRender] = useState([]); // стейт фильмов для рендеринга
   const [isLoading, setIsLoading] = useState(false); // стейт процесса загрузки данных
-  const [isSuccess, setIsSuccess] = useState(false); // стейт успешной регистрации/авторизации
   const [isProfileUpdating, setIsProfileUpdating] = useState(false); // стейт редактирования профайла
+  const [isSuccess, setIsSuccess] = useState(false); // стейт успешной регистрации/авторизации
+  const [successMessage, setSuccessMessage] = useState("") // стейт сообщения об успешном действии
   const [errorMessage, setErrorMessage] = useState(""); // стейт сообщения с ошибкой
   const [savedMovies, setSavedMovies] = useState([]); // стейт сохранённых фильмов
   const [isBtnLoading, setIsBtnLoading] = useState(false); // стейт блокировки формы на время процесса отправки
@@ -141,10 +142,15 @@ function App() {
     setErrorMessage(message);
   }
 
+  function handleSuccessMessage(message) {
+    setIsSuccess(true);
+    setIsInfoTooltipPopupOpen(true);
+    setSuccessMessage(message);
+  }
+
   // обработчик закрытия попапа
   function handleClosePopup() {
     setIsInfoTooltipPopupOpen(false);
-    setIsSuccess(false);
   }
 
   // получение сохранённых фильмов
@@ -205,7 +211,6 @@ function App() {
       .then((data) => {
         if (data.token) {
           localStorage.setItem("token", data.token);
-          // navigate("/movies");
           handleLogin();
         }
       })
@@ -221,6 +226,7 @@ function App() {
     mainApi
       .updateUser(name, email)
       .then(() => {
+        handleSuccessMessage(SUCCESS_PROFILE_UPDATE)
         setIsProfileUpdating(false);
         getUserInfo();
       })
@@ -321,6 +327,7 @@ function App() {
             isSuccess={isSuccess}
             onClose={handleClosePopup}
             errorMessage={errorMessage}
+            successMessage={successMessage}
           />
         </div>
       </div>
