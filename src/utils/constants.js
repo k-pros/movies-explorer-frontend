@@ -1,4 +1,4 @@
-export const MAIN_API_URL = "http://127.0.0.1:3000"
+export const MAIN_API_URL = "https://api.getmovies.nomoredomains.work"
 export const MOVIES_API_URL = "https://api.nomoreparties.co/beatfilm-movies"
 
 export const ERROR_FETCH_MOVIES = 'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз';
