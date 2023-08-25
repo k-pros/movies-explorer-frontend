@@ -36,12 +36,20 @@ function Movies({
   onSaveMovie,
   savedMovies,
   onDeleteMovie,
+  onGetMovies,
+  currentUser,
+  getSavedMovies,
+  handleError,
 }) {
   const { width } = useWindowSize(); // ширина экрана
   const [cardsForRender, setCardsForRender] = useState(0); // стейт карточек для отображения
   const [amountCards, setAmountCards] = useState(0); // стейт кол-ва карточек в зависимости от ширины экрана
   const [amountCardsToAdd, setAmountCardsToAdd] = useState(0); // стейт кол-ва карточек для добавления
   const [index, setIndex] = useState(0); // стейт кол-ва отображённых на экране карточек
+
+  useEffect(() => {
+    getSavedMovies();
+  }, [currentUser]);
 
   useEffect(() => {
     if (index === 0) setIndex(amountCards);
@@ -59,7 +67,6 @@ function Movies({
 
   useEffect(() => {
     setFoundShortMovies(searchShortMovies(foundMovies));
-    setIsLoading(false);
   }, [foundMovies]);
 
   // установка стейтов количества карточек в зависимости от ширины экрана
@@ -82,13 +89,14 @@ function Movies({
     setCardsForRender(cards.slice(0, index));
   }
 
+  useEffect(() => {
+    setFoundMovies(searchMovies(allMovies, searchQuery));
+  }, [allMovies])
+
   function handleSearchMovies(e) {
     e.preventDefault();
-
-    setIsLoading(true);
-    setFoundMovies(searchMovies(allMovies, searchQuery));
+    onGetMovies();
     localStorage.setItem("searchQuery", searchQuery);
-    // setIsLoading(false);
   }
 
   function handleToggleSwitch() {

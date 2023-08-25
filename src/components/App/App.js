@@ -19,7 +19,7 @@ function App() {
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false); // стейт попапа с ошибкой
   const [isLoggedIn, setIsLoggedIn] = useState(false); // стейт авторизации пользователя
   const [cards, setCards] = useState([]); // стейт карточек для рендеринга
-  // стейт всех фильмов
+  // стейт всех полученных фильмов
   const [allMovies, setAllMovies] = useState(
     JSON.parse(localStorage.getItem("movies")) || []
   );
@@ -65,16 +65,28 @@ function App() {
     localStorage.setItem("isToggleShortMovies", isToggleShortMovies);
   }, [foundMovies, foundShortMovies, isToggleShortMovies]);
 
+  // получение информации о пользователе
+  useEffect(() => {
+    if (isLoggedIn) {
+      getUserInfo()
+    }
+  }, [isLoggedIn]);
+
   function getUserInfo() {
     mainApi
       .getUserInfo()
-      .then((user) => {
-        setCurrentUser(user);
+      .then((userInfo) => {
+        setCurrentUser(userInfo);
       })
       .catch((err) => {
         console.log(err);
+        handleError(ERROR_FETCH_MOVIES);
       });
   }
+
+  useEffect(() => {
+    checkToken();
+  }, []);
 
   // функция проверки токена
   function checkToken() {
@@ -82,7 +94,6 @@ function App() {
 
     mainApi
       .checkToken()
-      .then()
       .then(() => {
         setIsLoggedIn(true);
         navigate(path);
@@ -90,34 +101,18 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  // проверка токена
-  useEffect(() => {
-    checkToken();
-  }, []);
-
-  useEffect(() => {
-    getSavedMovies();
-  }, [currentUser]);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      Promise.all([mainApi.getUserInfo(), moviesApi.getMovies()])
-        .then(([userInfo, movies]) => {
-          setCurrentUser(userInfo);
-          localStorage.setItem("movies", JSON.stringify(movies));
-          handleGetMovies();
-        })
-        .catch((err) => {
-          console.log(err);
-          handleError(ERROR_FETCH_MOVIES);
-        })
-        .finally(() => setIsLoading(false));
-    }
-  }, [isLoggedIn]);
-
-  // функция получения фильмов из локального хранилища
   function handleGetMovies() {
-    setAllMovies(JSON.parse(localStorage.getItem("movies")));
+    setIsLoading(true);
+    moviesApi
+      .getMovies()
+      .then((movies) => {
+        setAllMovies(movies);
+      })
+      .catch((err) => {
+        console.log(err);
+        handleError(ERROR_FETCH_MOVIES);
+      })
+      .finally(() => setIsLoading(false));
   }
 
   // обработчик выхода из аккаунта
@@ -125,6 +120,7 @@ function App() {
     setIsLoggedIn(false);
     localStorage.clear();
     navigate("/");
+    document.location.reload();
   }
 
   // обработчик регистрации на сервере
@@ -187,7 +183,7 @@ function App() {
 
   // функция регистрации пользователя
   function onRegister(name, email, password) {
-    setIsBtnLoading(true)
+    setIsBtnLoading(true);
     mainApi
       .register(name, email, password)
       .then(() => {
@@ -203,21 +199,21 @@ function App() {
 
   // функция авторизации пользователя
   function onLogin(email, password) {
-    setIsBtnLoading(true)
+    setIsBtnLoading(true);
     mainApi
       .autorize(email, password)
       .then((data) => {
         if (data.token) {
           localStorage.setItem("token", data.token);
+          // navigate("/movies");
+          handleLogin();
         }
-        navigate("/movies");
-        handleLogin();
       })
       .catch((err) => {
         console.log(err);
         handleError(err);
       })
-      .finally(() => setIsBtnLoading(false))
+      .finally(() => setIsBtnLoading(false));
   }
 
   // функция обновления профиля
@@ -262,6 +258,11 @@ function App() {
                   onSaveMovie={handleSaveMovie}
                   savedMovies={savedMovies}
                   onDeleteMovie={handleDeleteMovie}
+                  onGetMovies={handleGetMovies}
+                  currentUser={currentUser}
+                  getSavedMovies={getSavedMovies}
+                  checkToken={checkToken}
+                  handleError={handleError}
                 />
               }
             />

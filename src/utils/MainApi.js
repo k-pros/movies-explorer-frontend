@@ -29,7 +29,7 @@ class MainApi {
   autorize(email, password) {
     return fetch(`${this._url}/signin`, {
       method: "POST",
-      headers: this._headers,
+      headers: getHeaders(),
       body: JSON.stringify({email, password})
     })
       .then(this._handleResponse);
@@ -39,7 +39,7 @@ class MainApi {
   getUserInfo() {
     return fetch(`${this._url}/users/me`, {
       method: "GET",
-      headers: this._headers
+      headers: getHeaders()
     })
       .then(this._handleResponse);
   }
@@ -48,7 +48,7 @@ class MainApi {
   updateUser(name, email) {
     return fetch(`${this._url}/users/me`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: getHeaders(),
       body: JSON.stringify({name, email})
     })
       .then(this._handleResponse);
@@ -58,7 +58,7 @@ class MainApi {
   getMovies() {
     return fetch(`${this._url}/movies`, {
       method: "GET",
-      headers: this._headers
+      headers: getHeaders()
     })
       .then(this._handleResponse);
   }
@@ -67,7 +67,7 @@ class MainApi {
   saveMovie(movie) {
     return fetch(`${this._url}/movies`, {
       method: "POST",
-      headers: this._headers,
+      headers: getHeaders(),
       body: JSON.stringify(movie)
     })
       .then(this._handleResponse);
@@ -77,26 +77,29 @@ class MainApi {
   deleteMovie(movieId) {
     return fetch(`${this._url}/movies/${movieId}`, {
       method: "DELETE",
-      headers: this._headers,
+      headers: getHeaders(),
     })
       .then(this._handleResponse);
   }
 
-  checkToken(jwt) {
+  checkToken() {
     return fetch(`${this._url}/users/me`, {
       method: 'GET',
-      headers: this._headers,
+      headers: getHeaders(),
     })
       .then(this._handleResponse);
   }
 }
 
-const mainApi = new MainApi({
-  url: MAIN_API_URL,
-  headers: {
+function getHeaders() {
+  return ({
     "Content-Type": "application/json",
     "Authorization" : `Bearer ${localStorage.getItem("token")}`
-  },
+  })
+}
+
+const mainApi = new MainApi({
+  url: MAIN_API_URL,
 });
 
 export default mainApi;
