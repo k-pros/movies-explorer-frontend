@@ -99,7 +99,10 @@ function App() {
         setIsLoggedIn(true);
         navigate(path);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        handleError(err);
+      });
   }
 
   function handleGetMovies() {
@@ -164,7 +167,10 @@ function App() {
           })
         );
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        handleError(err);
+      });
   }
 
   // обработчик сохранения фильмов
@@ -174,7 +180,10 @@ function App() {
       .then(() => {
         getSavedMovies();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        handleError(err);
+      });
   }
 
   // обработчик удаления фильмов
@@ -184,7 +193,10 @@ function App() {
       .then(() => {
         getSavedMovies();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        handleError(err);
+      });
   }
 
   // функция регистрации пользователя
@@ -232,7 +244,7 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        setErrorMessage(ERROR_PROFILE);
+        handleError(ERROR_PROFILE);
       });
   }
 
