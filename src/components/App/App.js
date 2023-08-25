@@ -45,6 +45,7 @@ function App() {
   const [isProfileUpdating, setIsProfileUpdating] = useState(false); // стейт редактирования профайла
   const [errorMessage, setErrorMessage] = useState(""); // стейт сообщения с ошибкой
   const [savedMovies, setSavedMovies] = useState([]); // стейт сохранённых фильмов
+  const [isBtnLoading, setIsBtnLoading] = useState(false); // стейт блокировки формы на время процесса отправки
 
   // стейт текущего пользователя
   const [currentUser, setCurrentUser] = useState({
@@ -54,11 +55,10 @@ function App() {
 
   const location = useLocation();
 
-  
   useEffect(() => {
     setCards(moviesForRender);
   }, [moviesForRender]);
-  
+
   useEffect(() => {
     localStorage.setItem("foundMovies", JSON.stringify(foundMovies));
     localStorage.setItem("foundShortMovies", JSON.stringify(foundShortMovies));
@@ -88,7 +88,7 @@ function App() {
         navigate(path);
       })
       .catch((err) => console.log(err));
-    }
+  }
 
   // проверка токена
   useEffect(() => {
@@ -156,11 +156,13 @@ function App() {
     mainApi
       .getMovies()
       .then((movies) => {
-        setSavedMovies(movies.filter((item) => {
-          return item.owner._id === currentUser._id;
-        }));
+        setSavedMovies(
+          movies.filter((item) => {
+            return item.owner._id === currentUser._id;
+          })
+        );
       })
-      .catch((err) => console.log(err))
+      .catch((err) => console.log(err));
   }
 
   // обработчик сохранения фильмов
@@ -185,6 +187,7 @@ function App() {
 
   // функция регистрации пользователя
   function onRegister(name, email, password) {
+    setIsBtnLoading(true)
     mainApi
       .register(name, email, password)
       .then(() => {
@@ -194,11 +197,13 @@ function App() {
       .catch((err) => {
         console.log(err);
         handleError(err);
-      });
+      })
+      .finally(() => setIsBtnLoading(false));
   }
 
   // функция авторизации пользователя
   function onLogin(email, password) {
+    setIsBtnLoading(true)
     mainApi
       .autorize(email, password)
       .then((data) => {
@@ -211,7 +216,8 @@ function App() {
       .catch((err) => {
         console.log(err);
         handleError(err);
-      });
+      })
+      .finally(() => setIsBtnLoading(false))
   }
 
   // функция обновления профиля
@@ -296,9 +302,16 @@ function App() {
             />
             <Route
               path="/signup"
-              element={<AuthForm onRegister={onRegister} />}
+              element={
+                <AuthForm onRegister={onRegister} isBtnLoading={isBtnLoading} />
+              }
             />
-            <Route path="/signin" element={<AuthForm onLogin={onLogin} />} />
+            <Route
+              path="/signin"
+              element={
+                <AuthForm onLogin={onLogin} isBtnLoading={isBtnLoading} />
+              }
+            />
             <Route path="/*" element={<PageNotFound />} />
           </Routes>
 

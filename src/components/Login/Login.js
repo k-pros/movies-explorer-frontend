@@ -2,7 +2,7 @@ import "../AuthForm/AuthForm.css";
 import { Link } from "react-router-dom";
 import { useFormWithValidation } from "../../utils/useForm";
 
-function Login({ onLogin }) {
+function Login({ onLogin, isBtnLoading }) {
   const { values, handleChange, errors, isValid } =
     useFormWithValidation();
 
@@ -32,6 +32,7 @@ function Login({ onLogin }) {
               required
               value={values.email ?? ""}
               onChange={handleChange}
+              disabled={isBtnLoading}
             />
           </label>
           <span className="form__error form__error_visible">{errors.email}</span>
@@ -48,6 +49,7 @@ function Login({ onLogin }) {
               required
               value={values.password ?? ""}
               onChange={handleChange}
+              disabled={isBtnLoading}
             />
           </label>
           <span className="form__error form__error_visible">{errors.password}</span>
