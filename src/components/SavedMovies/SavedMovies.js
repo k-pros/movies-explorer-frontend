@@ -15,12 +15,18 @@ function SavedMovies({
   savedMovies,
   onDeleteMovie,
   moviesForRender,
+  currentUser,
+  getSavedMovies,
 }) {
   
   const [searchQuerySavedMovies, setSearchQuerySavedMovies] = useState("");
   const [foundSavedMovies, setFoundSavedMovies] = useState([]);
   const [foundShortSavedMovies, setFoundShortSavedMovies] = useState([]);
   const [isToggleSavedMovies, setIsToggle] = useState(false);
+
+  useEffect(() => {
+    getSavedMovies();
+  }, [currentUser]);
 
   useEffect(() => {
     setFoundSavedMovies(savedMovies);

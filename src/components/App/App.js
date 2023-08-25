@@ -105,7 +105,6 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        handleError(err);
       });
   }
 
@@ -303,6 +302,8 @@ function App() {
                   searchQuery={searchQuery}
                   setSearchQuery={setSearchQuery}
                   moviesForRender={moviesForRender}
+                  currentUser={currentUser}
+                  getSavedMovies={getSavedMovies}
                 />
               }
             />
