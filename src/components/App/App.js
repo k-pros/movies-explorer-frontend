@@ -298,7 +298,6 @@ function App() {
                   isLoggedIn={isLoggedIn}
                   onSignOut={handleSignOut}
                   onUpdateProfile={onUpdateProfile}
-                  currentUser={currentUser}
                   setIsProfileUpdating={setIsProfileUpdating}
                   isProfileUpdating={isProfileUpdating}
                   errorMessage={errorMessage}

@@ -1,17 +1,18 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import Header from "../Header/Header";
 import "./Profile.css";
 import { useFormWithValidation } from "../../utils/useForm";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function Profile({
   isLoggedIn,
   onSignOut,
-  currentUser,
   onUpdateProfile,
   isProfileUpdating,
   setIsProfileUpdating,
   errorMessage,
 }) {
+  const currentUser = useContext(CurrentUserContext);
   const { values, handleChange, isValid, setIsValid, setValues } = useFormWithValidation();
 
   useEffect(() => {
