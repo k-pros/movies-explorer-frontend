@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import "./App.css";
 import Main from "../Main/Main";
 import Movies from "../Movies/Movies";
@@ -12,11 +12,12 @@ import AuthForm from "../AuthForm/AuthForm";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { ERROR_FETCH_MOVIES, ERROR_PROFILE } from "../../utils/constants";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 function App() {
   const navigate = useNavigate();
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false); // стейт попапа с ошибкой
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // стейт авторизации пользователя
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // стейт авторизации пользователя
   const [cards, setCards] = useState([]); // стейт карточек для рендеринга
   // стейт всех фильмов
   const [allMovies, setAllMovies] = useState(
@@ -51,22 +52,13 @@ function App() {
     email: "",
   });
 
-  // получение информации о пользователе
-  useEffect(() => {
-    if (isLoggedIn) {
-      getUserInfo();
-    }
-  }, []);
+  const location = useLocation();
 
-  // проверка токена
-  useEffect(() => {
-    checkToken();
-  }, []);
-
+  
   useEffect(() => {
     setCards(moviesForRender);
   }, [moviesForRender]);
-
+  
   useEffect(() => {
     localStorage.setItem("foundMovies", JSON.stringify(foundMovies));
     localStorage.setItem("foundShortMovies", JSON.stringify(foundShortMovies));
@@ -86,15 +78,22 @@ function App() {
 
   // функция проверки токена
   function checkToken() {
+    const path = location.pathname;
+
     mainApi
       .checkToken()
-      .then((res) => {
-        if (res) {
-          setIsLoggedIn(true);
-        }
+      .then()
+      .then(() => {
+        setIsLoggedIn(true);
+        navigate(path);
       })
       .catch((err) => console.log(err));
-  }
+    }
+
+  // проверка токена
+  useEffect(() => {
+    checkToken();
+  }, []);
 
   useEffect(() => {
     getSavedMovies();
@@ -104,7 +103,6 @@ function App() {
     if (isLoggedIn) {
       Promise.all([mainApi.getUserInfo(), moviesApi.getMovies()])
         .then(([userInfo, movies]) => {
-          setIsLoading(true);
           setCurrentUser(userInfo);
           localStorage.setItem("movies", JSON.stringify(movies));
           handleGetMovies();
@@ -155,7 +153,6 @@ function App() {
 
   // получение сохранённых фильмов
   function getSavedMovies() {
-    setIsLoading(true);
     mainApi
       .getMovies()
       .then((movies) => {
@@ -164,7 +161,6 @@ function App() {
         }));
       })
       .catch((err) => console.log(err))
-      .finally(() => setIsLoading(false));
   }
 
   // обработчик сохранения фильмов
@@ -241,7 +237,8 @@ function App() {
             <Route
               path="/movies"
               element={
-                <Movies
+                <ProtectedRoute
+                  element={Movies}
                   cards={cards}
                   isLoggedIn={isLoggedIn}
                   isLoading={isLoading}
@@ -265,7 +262,8 @@ function App() {
             <Route
               path="/saved-movies"
               element={
-                <SavedMovies
+                <ProtectedRoute
+                  element={SavedMovies}
                   isLoggedIn={isLoggedIn}
                   isLoading={isLoading}
                   setIsLoading={setIsLoading}
@@ -282,7 +280,8 @@ function App() {
             <Route
               path="/profile"
               element={
-                <Profile
+                <ProtectedRoute
+                  element={Profile}
                   isLoggedIn={isLoggedIn}
                   onSignOut={handleSignOut}
                   onUpdateProfile={onUpdateProfile}

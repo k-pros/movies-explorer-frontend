@@ -27,7 +27,6 @@ function SavedMovies({
     searchShortMovies(savedMovies, searchQuerySavedMovies)
   }, [savedMovies]);
 
-
   useEffect(() => {
     setFoundShortSavedMovies(searchShortMovies(foundSavedMovies));
   }, [foundSavedMovies]);
@@ -38,14 +37,14 @@ function SavedMovies({
         ? foundShortSavedMovies
         : foundSavedMovies
     );
-    setIsLoading(false);
   }, [isToggleSavedMovies, foundShortSavedMovies]);
-
+  
   function handleSearchMovies(e) {
     e.preventDefault();
-
+    
     setIsLoading(true);
     setFoundSavedMovies(searchMovies(savedMovies, searchQuerySavedMovies));
+    setIsLoading(false);
   }
 
   function handleToggleSwitch() {
