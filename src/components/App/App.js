@@ -205,6 +205,7 @@ function App() {
   // функция регистрации пользователя
   function onRegister(name, email, password) {
     setIsBtnLoading(true);
+    console.log({name, email, password});
     mainApi
       .register(name, email, password)
       .then(() => {

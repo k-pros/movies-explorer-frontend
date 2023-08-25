@@ -3,7 +3,6 @@ import { MAIN_API_URL } from "./constants";
 class MainApi {
   constructor({ url, headers }) {
     this._url = url;
-    this._headers = headers;
   }
 
   // обработчик ответов сервера
@@ -19,7 +18,7 @@ class MainApi {
   register(name, email, password) {
     return fetch(`${this._url}/signup`, {
       method: "POST",
-      headers: this._headers,
+      headers: {"Content-Type": "application/json"},
       body: JSON.stringify({name, email, password})
     })
     .then(this._handleResponse)
