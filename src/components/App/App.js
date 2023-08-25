@@ -11,7 +11,11 @@ import mainApi from "../../utils/MainApi";
 import AuthForm from "../AuthForm/AuthForm";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import { ERROR_FETCH_MOVIES, ERROR_PROFILE, SUCCESS_PROFILE_UPDATE } from "../../utils/constants";
+import {
+  ERROR_FETCH_MOVIES,
+  ERROR_PROFILE,
+  SUCCESS_PROFILE_UPDATE,
+} from "../../utils/constants";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 function App() {
@@ -43,7 +47,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false); // стейт процесса загрузки данных
   const [isProfileUpdating, setIsProfileUpdating] = useState(false); // стейт редактирования профайла
   const [isSuccess, setIsSuccess] = useState(false); // стейт успешной регистрации/авторизации
-  const [successMessage, setSuccessMessage] = useState("") // стейт сообщения об успешном действии
+  const [successMessage, setSuccessMessage] = useState(""); // стейт сообщения об успешном действии
   const [errorMessage, setErrorMessage] = useState(""); // стейт сообщения с ошибкой
   const [savedMovies, setSavedMovies] = useState([]); // стейт сохранённых фильмов
   const [isBtnLoading, setIsBtnLoading] = useState(false); // стейт блокировки формы на время процесса отправки
@@ -69,7 +73,7 @@ function App() {
   // получение информации о пользователе
   useEffect(() => {
     if (isLoggedIn) {
-      getUserInfo()
+      getUserInfo();
     }
   }, [isLoggedIn]);
 
@@ -238,7 +242,7 @@ function App() {
     mainApi
       .updateUser(name, email)
       .then(() => {
-        handleSuccessMessage(SUCCESS_PROFILE_UPDATE)
+        handleSuccessMessage(SUCCESS_PROFILE_UPDATE);
         setIsProfileUpdating(false);
         getUserInfo();
       })

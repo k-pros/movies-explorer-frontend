@@ -13,7 +13,8 @@ function Profile({
   errorMessage,
 }) {
   const currentUser = useContext(CurrentUserContext);
-  const { values, handleChange, isValid, setIsValid, setValues } = useFormWithValidation();
+  const { values, handleChange, isValid, setIsValid, setValues } =
+    useFormWithValidation();
 
   useEffect(() => {
     setValues({
@@ -30,7 +31,7 @@ function Profile({
     ) {
       setIsValid(false);
     }
-  }, [values.name, values.email])
+  }, [values.name, values.email]);
 
   function handleSubmit(e) {
     e.preventDefault();

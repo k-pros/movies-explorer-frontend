@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import { useFormWithValidation } from "../../utils/useForm";
 
 function Login({ onLogin, isBtnLoading }) {
-  const { values, handleChange, errors, isValid } =
-    useFormWithValidation();
+  const { values, handleChange, errors, isValid } = useFormWithValidation();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -35,7 +34,9 @@ function Login({ onLogin, isBtnLoading }) {
               disabled={isBtnLoading}
             />
           </label>
-          <span className="form__error form__error_visible">{errors.email}</span>
+          <span className="form__error form__error_visible">
+            {errors.email}
+          </span>
 
           <label className="form__label">
             Пароль
@@ -52,7 +53,9 @@ function Login({ onLogin, isBtnLoading }) {
               disabled={isBtnLoading}
             />
           </label>
-          <span className="form__error form__error_visible">{errors.password}</span>
+          <span className="form__error form__error_visible">
+            {errors.password}
+          </span>
         </div>
 
         <button

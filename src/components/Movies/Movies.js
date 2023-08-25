@@ -22,7 +22,6 @@ function Movies({
   cards,
   isLoggedIn,
   isLoading,
-  setIsLoading,
   foundMovies,
   setFoundMovies,
   allMovies,
@@ -39,7 +38,6 @@ function Movies({
   onGetMovies,
   currentUser,
   getSavedMovies,
-  handleError,
 }) {
   const { width } = useWindowSize(); // ширина экрана
   const [cardsForRender, setCardsForRender] = useState(0); // стейт карточек для отображения
@@ -91,7 +89,7 @@ function Movies({
 
   useEffect(() => {
     setFoundMovies(searchMovies(allMovies, searchQuery));
-  }, [allMovies])
+  }, [allMovies]);
 
   function handleSearchMovies(e) {
     e.preventDefault();

@@ -9,8 +9,12 @@ function AuthForm({ onRegister, onLogin, isBtnLoading }) {
   return (
     <section className="auth-form">
       <Logo className="auth-form__logo" />
-      {location.pathname === "/signin" && <Login onLogin={onLogin} isBtnLoading={isBtnLoading} />}
-      {location.pathname === "/signup" && <Register onRegister={onRegister} isBtnLoading={isBtnLoading} />}
+      {location.pathname === "/signin" && (
+        <Login onLogin={onLogin} isBtnLoading={isBtnLoading} />
+      )}
+      {location.pathname === "/signup" && (
+        <Register onRegister={onRegister} isBtnLoading={isBtnLoading} />
+      )}
     </section>
   );
 }

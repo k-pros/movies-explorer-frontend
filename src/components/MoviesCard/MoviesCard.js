@@ -11,21 +11,19 @@ function MoviesCard({ movie, onSaveMovie, savedMovies, onDeleteMovie }) {
     savedMovies.forEach((item) => {
       if (item.movieId === movie.id) {
         movie._id = item._id;
-        setIsSaved(true)
+        setIsSaved(true);
       }
-    })
-
-  }, [movie, savedMovies])
+    });
+  }, [movie, savedMovies]);
 
   function convertDuration(movie) {
-    const hours = Math.floor(movie/60);
+    const hours = Math.floor(movie / 60);
     const minutes = movie % 60;
-    return `${hours}ч ${minutes}м`
+    return `${hours}ч ${minutes}м`;
   }
 
-
   // обработчик клика по кнопке сохранения
-  function handleSaveButton () {
+  function handleSaveButton() {
     if (!isSavedMovie) {
       handleSaveMovie();
     } else {
@@ -48,8 +46,8 @@ function MoviesCard({ movie, onSaveMovie, savedMovies, onDeleteMovie }) {
       movieId: movie.id,
       nameRU: movie.nameRU,
       nameEN: movie.nameEN,
-    }
-    
+    };
+
     onSaveMovie(movieForSave);
   }
 
@@ -59,16 +57,29 @@ function MoviesCard({ movie, onSaveMovie, savedMovies, onDeleteMovie }) {
 
   if (location.pathname === "/movies") {
     return (
-        <li className="card">
+      <li className="card">
         <div className="card__container">
           <div className="card__description">
             <h2 className="card__title">{movie.nameRU}</h2>
             <p className="card__time">{convertDuration(movie.duration)}</p>
           </div>
-          <div className={`card__save-btn btn ${isSavedMovie ? "card__save-btn_active" : ""}`} onClick={handleSaveButton}></div>
+          <div
+            className={`card__save-btn btn ${
+              isSavedMovie ? "card__save-btn_active" : ""
+            }`}
+            onClick={handleSaveButton}
+          ></div>
         </div>
-        <Link to={movie.trailerLink} className="card__link link" target="_blank">
-          <img src={`https://api.nomoreparties.co${movie.image.url}`} alt="Обложка фильма" className="card__image" />
+        <Link
+          to={movie.trailerLink}
+          className="card__link link"
+          target="_blank"
+        >
+          <img
+            src={`https://api.nomoreparties.co${movie.image.url}`}
+            alt="Обложка фильма"
+            className="card__image"
+          />
         </Link>
       </li>
     );
@@ -83,7 +94,10 @@ function MoviesCard({ movie, onSaveMovie, savedMovies, onDeleteMovie }) {
               <h2 className="card__title">{movie.nameRU}</h2>
               <p className="card__time">{convertDuration(movie.duration)}</p>
             </div>
-            <div className="card__save-btn btn card__save-btn_delete" onClick={handleDeleteMovie}></div>
+            <div
+              className="card__save-btn btn card__save-btn_delete"
+              onClick={handleDeleteMovie}
+            ></div>
           </div>
           <img src={movie.image} alt="Обложка фильма" className="card__image" />
         </li>
