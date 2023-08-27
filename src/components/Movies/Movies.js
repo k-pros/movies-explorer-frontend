@@ -93,6 +93,7 @@ function Movies({
 
   function handleSearchMovies(e) {
     e.preventDefault();
+    setIndex(0);
     onGetMovies();
     localStorage.setItem("searchQuery", searchQuery);
   }
