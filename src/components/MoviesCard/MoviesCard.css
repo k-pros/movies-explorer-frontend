@@ -12,11 +12,20 @@
   box-sizing: border-box;
 }
 
+.card__description {
+  max-width: 100%;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
 .card__title {
-  max-width: 280px;
+  max-width: calc(100% - 30px);
   margin: 0 0 9px;
   font-size: 15px;
   font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .card__time {
@@ -30,6 +39,9 @@
   height: 30px;
   background-image: url("../../images/movies-save-ico.svg");
   background-color: inherit;
+  background-repeat: no-repeat;
+  background-size: cover;
+  flex-shrink: 0;
 }
 
 .card__save-btn_active {

@@ -40,15 +40,15 @@
 .search__toggle {
   width: 36px;
   height: 20px;
-  background-image: url("../../images/search-toggle.svg");
+  background-image: url("../../images/search-toggle_off.svg");
   background-repeat: no-repeat;
   margin-right: 12px;
   background-color: #fafafa;
   box-sizing: border-box;
 }
 
-.search__toggle_inactive {
-  background-image: url("../../images/search-toggle_off.svg");
+.search__toggle_active {
+  background-image: url("../../images/search-toggle.svg");
 }
 
 .search__toggle-name {

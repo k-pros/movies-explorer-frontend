@@ -1,41 +1,80 @@
 import "../AuthForm/AuthForm.css";
 import { Link } from "react-router-dom";
-import Logo from "../Logo/Logo";
+import { useFormWithValidation } from "../../utils/useForm";
 
-function Register() {
+function Register({ onRegister, isBtnLoading }) {
+  const { values, handleChange, errors, isValid } = useFormWithValidation();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const { name, email, password } = values;
+    onRegister(name, email, password);
+  }
+
   return (
-    <section className="auth-form">
-      <Logo className="auth-form__logo" />
-      <form className="form auth-form__form">
+    <>
+      <form onSubmit={handleSubmit} className="form auth-form__form">
         <div className="form__container">
           <h2 className="form__title">Добро пожаловать!</h2>
           <label className="form__label">
             Имя
-            <input type="text" className="form__input" placeholder="Имя" minLength={2} maxLength={30} required />
+            <input
+              type="text"
+              name="name"
+              className="form__input"
+              placeholder="Имя"
+              minLength={2}
+              maxLength={30}
+              required
+              value={values.name ?? ""}
+              onChange={handleChange}
+              disabled={isBtnLoading}
+            />
           </label>
+          <span className="form__error form__error_visible">{errors.name}</span>
 
           <label className="form__label">
             E-mail
-            <input type="email" className="form__input" placeholder="E-mail" minLength={2} maxLength={30} required />
+            <input
+              type="email"
+              name="email"
+              className="form__input"
+              placeholder="E-mail"
+              minLength={2}
+              maxLength={30}
+              pattern="[a-z0-9]+@[a-z0-9]+\.[a-z]{2,}"
+              required
+              value={values.email ?? ""}
+              onChange={handleChange}
+              disabled={isBtnLoading}
+            />
           </label>
+          <span className="form__error form__error_visible">{errors.email}</span>
 
           <label className="form__label">
             Пароль
             <input
               type="password"
+              name="password"
               className="form__input"
               placeholder="Пароль"
-              minLength={2} maxLength={30}
+              minLength={2}
+              maxLength={30}
               required
+              value={values.password ?? ""}
+              onChange={handleChange}
+              disabled={isBtnLoading}
             />
           </label>
-          <span className="form__error">Что-то пошло не так...</span>
+          <span className="form__error form__error_visible">{errors.password}</span>
         </div>
 
         <button
           type="submit"
-          className="form__btn btn"
-          aria-label="Зарегистрироваться"
+          className={`form__btn ${!isValid ? "form__btn_disabled" : "btn"}`}
+          disabled={!isValid}
+          aria-label="Войти"
         >
           Зарегистрироваться
         </button>
@@ -47,7 +86,7 @@ function Register() {
           Войти
         </Link>
       </div>
-    </section>
+    </>
   );
 }
 

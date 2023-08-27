@@ -1,11 +1,22 @@
 import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard";
 
-function MoviesCardList() {
+function MoviesCardList({ cards, onSaveMovie, savedMovies, onDeleteMovie }) {
   return (
     <section className="movies">
       <ul className="movies-list">
-        <MoviesCard />
+        {cards.length > 0 &&
+          cards.map((movie) => {
+            return (
+              <MoviesCard
+                key={movie.id ?? movie._id}
+                movie={movie}
+                onSaveMovie={onSaveMovie}
+                savedMovies={savedMovies}
+                onDeleteMovie={onDeleteMovie}
+              />
+            );
+          })}
       </ul>
     </section>
   );
