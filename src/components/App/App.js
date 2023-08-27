@@ -194,11 +194,12 @@ function App() {
     mainApi
       .deleteMovie(movie._id)
       .then((deletedMovie) => {
-        const newArray = moviesForRender.filter((item) => {
-          return item._id !== deletedMovie._id;
-        });
-        setMoviesForRender(newArray);
-        getSavedMovies();
+        if (location.pathname === '/saved-movies') {
+          const newArray = moviesForRender.filter((item) => {
+            return item._id !== deletedMovie._id;
+          });
+          setMoviesForRender(newArray);
+        }
       })
       .catch((err) => {
         console.log(err);
