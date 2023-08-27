@@ -185,12 +185,26 @@ function App() {
       });
   }
 
+  function deleteItem(item) {
+
+  }
+
   // обработчик удаления фильмов
   function handleDeleteMovie(movie) {
     mainApi
       .deleteMovie(movie._id)
-      .then(() => {
-        getSavedMovies();
+      .then((deletedMovie) => {
+        // const newArray = savedMovies.filter((item) => {
+        //   return item._id !== deletedMovie._id;
+        // });
+          // setSavedMovies(newArray);
+
+        const newArray = moviesForRender.filter((item) => {
+          return item._id !== deletedMovie._id;
+        });
+        setMoviesForRender(newArray);
+
+        getSavedMovies() 
       })
       .catch((err) => {
         console.log(err);

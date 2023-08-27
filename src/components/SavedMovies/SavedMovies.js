@@ -29,8 +29,11 @@ function SavedMovies({
   }, [currentUser]);
 
   useEffect(() => {
-    setFoundSavedMovies(savedMovies);
-    searchShortMovies(savedMovies, searchQuerySavedMovies)
+    searchQuerySavedMovies
+      ? setFoundSavedMovies(moviesForRender)
+      : setFoundSavedMovies(savedMovies);
+
+    searchShortMovies(savedMovies, searchQuerySavedMovies);
   }, [savedMovies]);
 
   useEffect(() => {
@@ -55,6 +58,10 @@ function SavedMovies({
 
   function handleToggleSwitch() {
     setIsToggle(!isToggleSavedMovies);
+  }
+
+  function handleDelete() {
+    onDeleteMovie();
   }
 
   return (
