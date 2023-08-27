@@ -130,11 +130,6 @@ function App() {
     document.location.reload();
   }
 
-  // обработчик регистрации на сервере
-  function handleRegister() {
-    setIsSuccess(true);
-  }
-
   // обработчик авторизации
   function handleLogin() {
     setIsLoggedIn(true);
@@ -205,12 +200,10 @@ function App() {
   // функция регистрации пользователя
   function onRegister(name, email, password) {
     setIsBtnLoading(true);
-    console.log({name, email, password});
     mainApi
       .register(name, email, password)
       .then(() => {
-        navigate("/signin");
-        handleRegister();
+        onLogin(email, password)
       })
       .catch((err) => {
         console.log(err);
