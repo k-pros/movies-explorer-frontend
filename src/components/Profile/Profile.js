@@ -3,6 +3,7 @@ import Header from "../Header/Header";
 import "./Profile.css";
 import { useFormWithValidation } from "../../utils/useForm";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { ERROR_PROFILE } from "../../utils/constants";
 
 function Profile({
   isLoggedIn,
@@ -11,6 +12,8 @@ function Profile({
   isProfileUpdating,
   setIsProfileUpdating,
   errorMessage,
+  isProfileError,
+  setIsProfileError
 }) {
   const currentUser = useContext(CurrentUserContext);
   const { values, handleChange, isValid, setIsValid, setValues } =
@@ -36,10 +39,12 @@ function Profile({
   function handleSubmit(e) {
     e.preventDefault();
     onUpdateProfile(values.name, values.email);
+    setIsProfileError(false)
   }
 
   function handleEditProfile() {
     setIsProfileUpdating(true);
+    // setErrorMessage(false);
   }
 
   return (
@@ -85,7 +90,7 @@ function Profile({
             {isProfileUpdating ? (
               <>
                 <span className="profile__error profile__error_visible">
-                  {errorMessage}
+                  {isProfileError && ERROR_PROFILE}
                 </span>
                 <button
                   type="submit"

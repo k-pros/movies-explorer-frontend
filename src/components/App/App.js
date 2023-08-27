@@ -51,6 +51,7 @@ function App() {
   const [errorMessage, setErrorMessage] = useState(""); // стейт сообщения с ошибкой
   const [savedMovies, setSavedMovies] = useState([]); // стейт сохранённых фильмов
   const [isBtnLoading, setIsBtnLoading] = useState(false); // стейт блокировки формы на время процесса отправки
+  const [isProfileError, setIsProfileError] = useState(false); // стейт наличия ошибки при обновлении профайла
 
   // стейт текущего пользователя
   const [currentUser, setCurrentUser] = useState({
@@ -203,7 +204,7 @@ function App() {
     mainApi
       .register(name, email, password)
       .then(() => {
-        onLogin(email, password)
+        onLogin(email, password);
       })
       .catch((err) => {
         console.log(err);
@@ -241,7 +242,7 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        handleError(ERROR_PROFILE);
+        setIsProfileError(true);
       });
   }
 
@@ -314,6 +315,8 @@ function App() {
                   errorMessage={errorMessage}
                   setMoviesForRender={setMoviesForRender}
                   getSavedMovies={getSavedMovies}
+                  isProfileError={isProfileError}
+                  setIsProfileError={setIsProfileError}
                 />
               }
             />
