@@ -7,7 +7,6 @@ function MoviesCard({ movie, onSaveMovie, savedMovies, onDeleteMovie }) {
   const [isSavedMovie, setIsSaved] = useState(false);
 
   useEffect(() => {
-    // checkSavedMovie(movie, savedMovies)
     savedMovies.forEach((item) => {
       if (item.movieId === movie.id) {
         movie._id = item._id;

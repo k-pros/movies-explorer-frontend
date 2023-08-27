@@ -44,6 +44,7 @@ function Movies({
   const [amountCards, setAmountCards] = useState(0); // стейт кол-ва карточек в зависимости от ширины экрана
   const [amountCardsToAdd, setAmountCardsToAdd] = useState(0); // стейт кол-ва карточек для добавления
   const [index, setIndex] = useState(0); // стейт кол-ва отображённых на экране карточек
+  const [isSearch, setIsSearch] = useState(false) // стейт наличия первого поиска
 
   useEffect(() => {
     getSavedMovies();
@@ -87,15 +88,21 @@ function Movies({
     setCardsForRender(cards.slice(0, index));
   }
 
-  useEffect(() => {
+  function handleSetFoundMovies() {
     setFoundMovies(searchMovies(allMovies, searchQuery));
+  }
+
+  useEffect(() => {
+    handleSetFoundMovies();
   }, [allMovies]);
 
   function handleSearchMovies(e) {
     e.preventDefault();
     setIndex(0);
-    onGetMovies();
+    (allMovies.length === 0) && onGetMovies();
+    handleSetFoundMovies();
     localStorage.setItem("searchQuery", searchQuery);
+    setIsSearch(true);
   }
 
   function handleToggleSwitch() {
@@ -134,7 +141,7 @@ function Movies({
               Ещё
             </button>
           </>
-        ) : (
+        ) : isSearch && (
           <p className="movies__search-result">Ничего не найдено</p>
         )}
       </main>
