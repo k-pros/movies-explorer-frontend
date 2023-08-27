@@ -102,7 +102,11 @@ function App() {
       .checkToken()
       .then(() => {
         setIsLoggedIn(true);
-        navigate(path);
+          if (path === '/signin' || path === '/signup') {
+            navigate('/movies');
+          } else {
+            navigate(path);
+          }
       })
       .catch((err) => {
         console.log(err);
@@ -185,26 +189,16 @@ function App() {
       });
   }
 
-  function deleteItem(item) {
-
-  }
-
   // обработчик удаления фильмов
   function handleDeleteMovie(movie) {
     mainApi
       .deleteMovie(movie._id)
       .then((deletedMovie) => {
-        // const newArray = savedMovies.filter((item) => {
-        //   return item._id !== deletedMovie._id;
-        // });
-          // setSavedMovies(newArray);
-
         const newArray = moviesForRender.filter((item) => {
           return item._id !== deletedMovie._id;
         });
         setMoviesForRender(newArray);
-
-        getSavedMovies() 
+        getSavedMovies();
       })
       .catch((err) => {
         console.log(err);
